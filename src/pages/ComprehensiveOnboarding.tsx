@@ -19,10 +19,9 @@ const ComprehensiveOnboarding = () => {
     pre_flight_completion_date: '',
     pre_flight_signature: '',
     // Day before
-    day_before_welcome_call_main: false,
-    day_before_welcome_call_confirm_excitement: false,
-    day_before_welcome_call_confirm_shifts: false,
-    day_before_welcome_call_explain_first_day: false,
+    day_before_welcome_call_excitement: false,
+    day_before_welcome_call_shifts: false,
+    day_before_welcome_call_explain: false,
     day_before_inform_crew: false,
     day_before_check_uniform: false,
     day_before_completion_date: '',
@@ -34,17 +33,16 @@ const ComprehensiveOnboarding = () => {
     first_shift_welcome_table: false,
     first_shift_check_vault_id: false,
     first_shift_check_clock_in: false,
-    first_shift_explain_agenda_main: false,
-    first_shift_agenda_kfc_welcome: false,
-    first_shift_agenda_vault_induction: false,
-    first_shift_agenda_store_tour: false,
-    first_shift_agenda_hr_policies: false,
+    first_shift_kfc_welcome_agenda: false,
+    first_shift_vault_induction_agenda: false,
+    first_shift_store_tour_agenda: false,
+    first_shift_hr_policies_agenda: false,
     first_shift_completion_date: '',
     first_shift_signature: '',
     // Induction vault
-    induction_vault_welcome_to_kfc: false,
+    induction_vault_welcome_kfc: false,
     induction_vault_culture: false,
-    induction_vault_behind_the_bucket: false,
+    induction_vault_behind_bucket: false,
     induction_vault_serious_stuff: false,
     induction_vault_answer_questions: false,
     induction_vault_completion_date: '',
@@ -55,17 +53,17 @@ const ComprehensiveOnboarding = () => {
     compliance_vault_harassment: false,
     compliance_vault_food_safety: false,
     compliance_vault_check_in: false,
-    compliance_vault_ensure_break: false,
+    compliance_vault_ensure_breaks: false,
     compliance_vault_completion_date: '',
     compliance_vault_signature: '',
     // Tour
-    tour_introduce_to_crew: false,
+    tour_introduce_crew: false,
     tour_show_restaurant: false,
     tour_explain_fire_safety: false,
     tour_show_welfare_area: false,
     tour_completion_date: '',
     tour_signature: '',
-    // HR
+    // HR policies
     hr_review_work_planner: false,
     hr_check_preplanned_time_off: false,
     hr_explain_sickness_policy: false,
@@ -80,7 +78,7 @@ const ComprehensiveOnboarding = () => {
     // Day 4 to 30
     day_4_to_30_working_unaided: false,
     day_4_to_30_feedback_sessions: false,
-    day_4_to_30_vault_modules_completed: false,
+    day_4_to_30_vault_modules: false,
     day_4_to_30_completion_date: '',
     day_4_to_30_signature: '',
     // Final sign off
@@ -216,11 +214,11 @@ const ComprehensiveOnboarding = () => {
             </CardContent>
           </Card>
 
-          {/* Day Before Section */}
+          {/* Day Before */}
           <Card className="bg-white shadow-lg" style={{ borderLeft: '8px solid #FE0000' }}>
             <CardHeader className="p-6">
               <CardTitle className="text-xl font-bold" style={{ color: '#FE0000' }}>
-                The Day Before the Delicious Debut!
+                Day Before
               </CardTitle>
             </CardHeader>
             <CardContent className="p-6 pt-0">
@@ -230,46 +228,33 @@ const ComprehensiveOnboarding = () => {
                     type="checkbox" 
                     className="mt-1 w-5 h-5 flex-shrink-0" 
                     style={{ accentColor: '#FE0000' }}
-                    checked={formData.day_before_welcome_call_main}
-                    onChange={(e) => handleInputChange('day_before_welcome_call_main', e.target.checked)}
+                    checked={formData.day_before_welcome_call_excitement}
+                    onChange={(e) => handleInputChange('day_before_welcome_call_excitement', e.target.checked)}
                   />
-                  <span>Time for a Welcome Call! Ring up your new Team Member to:</span>
+                  <span>Welcome Call - Confirm Excitement</span>
                 </label>
                 
-                <div className="ml-8 space-y-3">
-                  <label className="flex items-start gap-3 text-sm text-gray-600">
-                    <input 
-                      type="checkbox" 
-                      className="mt-1 w-4 h-4 flex-shrink-0" 
-                      style={{ accentColor: '#FE0000' }}
-                      checked={formData.day_before_welcome_call_confirm_excitement}
-                      onChange={(e) => handleInputChange('day_before_welcome_call_confirm_excitement', e.target.checked)}
-                    />
-                    <span>Roll out the red carpet (KFC style!) and make sure they're still cluckin' excited for the role!</span>
-                  </label>
-                  
-                  <label className="flex items-start gap-3 text-sm text-gray-600">
-                    <input 
-                      type="checkbox" 
-                      className="mt-1 w-4 h-4 flex-shrink-0" 
-                      style={{ accentColor: '#FE0000' }}
-                      checked={formData.day_before_welcome_call_confirm_shifts}
-                      onChange={(e) => handleInputChange('day_before_welcome_call_confirm_shifts', e.target.checked)}
-                    />
-                    <span>Chat about any prior commitments and lock in their shifts for their first week.</span>
-                  </label>
-                  
-                  <label className="flex items-start gap-3 text-sm text-gray-600">
-                    <input 
-                      type="checkbox" 
-                      className="mt-1 w-4 h-4 flex-shrink-0" 
-                      style={{ accentColor: '#FE0000' }}
-                      checked={formData.day_before_welcome_call_explain_first_day}
-                      onChange={(e) => handleInputChange('day_before_welcome_call_explain_first_day', e.target.checked)}
-                    />
-                    <span>Give 'em the delicious scoop on their first day and what to expect – no surprises, just good vibes!</span>
-                  </label>
-                </div>
+                <label className="flex items-start gap-3 text-base">
+                  <input 
+                    type="checkbox" 
+                    className="mt-1 w-5 h-5 flex-shrink-0" 
+                    style={{ accentColor: '#FE0000' }}
+                    checked={formData.day_before_welcome_call_shifts}
+                    onChange={(e) => handleInputChange('day_before_welcome_call_shifts', e.target.checked)}
+                  />
+                  <span>Welcome Call - Confirm Shifts</span>
+                </label>
+                
+                <label className="flex items-start gap-3 text-base">
+                  <input 
+                    type="checkbox" 
+                    className="mt-1 w-5 h-5 flex-shrink-0" 
+                    style={{ accentColor: '#FE0000' }}
+                    checked={formData.day_before_welcome_call_explain}
+                    onChange={(e) => handleInputChange('day_before_welcome_call_explain', e.target.checked)}
+                  />
+                  <span>Welcome Call - Explain First Day</span>
+                </label>
 
                 <label className="flex items-start gap-3 text-base">
                   <input 
@@ -279,7 +264,7 @@ const ComprehensiveOnboarding = () => {
                     checked={formData.day_before_inform_crew}
                     onChange={(e) => handleInputChange('day_before_inform_crew', e.target.checked)}
                   />
-                  <span>Spread the Word! Let the whole crew know a new superstar is joining the team!</span>
+                  <span>Inform Crew</span>
                 </label>
 
                 <label className="flex items-start gap-3 text-base">
@@ -290,7 +275,7 @@ const ComprehensiveOnboarding = () => {
                     checked={formData.day_before_check_uniform}
                     onChange={(e) => handleInputChange('day_before_check_uniform', e.target.checked)}
                   />
-                  <span>Gear Up! Check that their shiny new uniform has arrived and is ready.</span>
+                  <span>Check Uniform</span>
                 </label>
 
                 <div className="border-t border-dashed border-gray-300 pt-4 mt-6 space-y-3">
@@ -308,7 +293,7 @@ const ComprehensiveOnboarding = () => {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Signature of ARGM/RGM:
+                        Signature:
                       </label>
                       <Input
                         value={formData.day_before_signature}
@@ -323,18 +308,14 @@ const ComprehensiveOnboarding = () => {
             </CardContent>
           </Card>
 
-          {/* First Shift Section */}
+          {/* First Shift */}
           <Card className="bg-white shadow-lg" style={{ borderLeft: '8px solid #FE0000' }}>
             <CardHeader className="p-6">
               <CardTitle className="text-xl font-bold" style={{ color: '#FE0000' }}>
-                The Big First Shift: Let's Make it Legendary!
+                First Shift
               </CardTitle>
             </CardHeader>
             <CardContent className="p-6 pt-0">
-              <div className="mb-4 font-semibold text-yellow-600 bg-yellow-100 p-3 rounded-md">
-                <span className="font-bold" style={{ color: '#FE0000' }}>Heads Up, Colonel!</span> New TMs cannot go behind the Food Counter unless they have their Induction Training completed on Vault! Safety first, flavor always!
-              </div>
-              
               <div className="space-y-4">
                 <label className="flex items-start gap-3 text-base">
                   <input 
@@ -344,7 +325,7 @@ const ComprehensiveOnboarding = () => {
                     checked={formData.first_shift_manager_onboarding}
                     onChange={(e) => handleInputChange('first_shift_manager_onboarding', e.target.checked)}
                   />
-                  <span>The RGM or ARGM should be scheduled to personally meet the New TM in store for their first shift and complete Onboarding.</span>
+                  <span>Manager Onboarding</span>
                 </label>
                 
                 <label className="flex items-start gap-3 text-base">
@@ -355,7 +336,7 @@ const ComprehensiveOnboarding = () => {
                     checked={formData.first_shift_warm_welcome}
                     onChange={(e) => handleInputChange('first_shift_warm_welcome', e.target.checked)}
                   />
-                  <span>Make sure everyone knows the New TM is starting today and their name – let's give 'em a warm KFC welcome!</span>
+                  <span>Warm Welcome</span>
                 </label>
                 
                 <label className="flex items-start gap-3 text-base">
@@ -366,7 +347,7 @@ const ComprehensiveOnboarding = () => {
                     checked={formData.first_shift_prepare_locker}
                     onChange={(e) => handleInputChange('first_shift_prepare_locker', e.target.checked)}
                   />
-                  <span>Prepare a clean locker just for them.</span>
+                  <span>Prepare Locker</span>
                 </label>
 
                 <label className="flex items-start gap-3 text-base">
@@ -377,7 +358,7 @@ const ComprehensiveOnboarding = () => {
                     checked={formData.first_shift_welcome_table}
                     onChange={(e) => handleInputChange('first_shift_welcome_table', e.target.checked)}
                   />
-                  <span>Set Up a VIP Welcome! A welcome table with their uniform (including name badge) in a welcome bucket. (If the uniform doesn't fit, they should inform you ASAP to order a different size).</span>
+                  <span>Welcome Table</span>
                 </label>
 
                 <label className="flex items-start gap-3 text-base">
@@ -388,7 +369,7 @@ const ComprehensiveOnboarding = () => {
                     checked={formData.first_shift_check_vault_id}
                     onChange={(e) => handleInputChange('first_shift_check_vault_id', e.target.checked)}
                   />
-                  <span>Ensure the New TM has received their Vault ID and it's working like a charm.</span>
+                  <span>Check Vault ID</span>
                 </label>
 
                 <label className="flex items-start gap-3 text-base">
@@ -399,7 +380,7 @@ const ComprehensiveOnboarding = () => {
                     checked={formData.first_shift_check_clock_in}
                     onChange={(e) => handleInputChange('first_shift_check_clock_in', e.target.checked)}
                   />
-                  <span>Confirm the New TM can clock in properly – no hitches!</span>
+                  <span>Check Clock In</span>
                 </label>
 
                 <label className="flex items-start gap-3 text-base">
@@ -407,57 +388,44 @@ const ComprehensiveOnboarding = () => {
                     type="checkbox" 
                     className="mt-1 w-5 h-5 flex-shrink-0" 
                     style={{ accentColor: '#FE0000' }}
-                    checked={formData.first_shift_explain_agenda_main}
-                    onChange={(e) => handleInputChange('first_shift_explain_agenda_main', e.target.checked)}
+                    checked={formData.first_shift_kfc_welcome_agenda}
+                    onChange={(e) => handleInputChange('first_shift_kfc_welcome_agenda', e.target.checked)}
                   />
-                  <span>Explain the exciting agenda for the day:</span>
+                  <span>KFC Welcome Agenda</span>
                 </label>
 
-                <div className="ml-8 space-y-3">
-                  <label className="flex items-start gap-3 text-sm text-gray-600">
-                    <input 
-                      type="checkbox" 
-                      className="mt-1 w-4 h-4 flex-shrink-0" 
-                      style={{ accentColor: '#FE0000' }}
-                      checked={formData.first_shift_agenda_kfc_welcome}
-                      onChange={(e) => handleInputChange('first_shift_agenda_kfc_welcome', e.target.checked)}
-                    />
-                    <span>A Big KFC Welcome!</span>
-                  </label>
-                  
-                  <label className="flex items-start gap-3 text-sm text-gray-600">
-                    <input 
-                      type="checkbox" 
-                      className="mt-1 w-4 h-4 flex-shrink-0" 
-                      style={{ accentColor: '#FE0000' }}
-                      checked={formData.first_shift_agenda_vault_induction}
-                      onChange={(e) => handleInputChange('first_shift_agenda_vault_induction', e.target.checked)}
-                    />
-                    <span>Vault Induction Training – The Essentials!</span>
-                  </label>
-                  
-                  <label className="flex items-start gap-3 text-sm text-gray-600">
-                    <input 
-                      type="checkbox" 
-                      className="mt-1 w-4 h-4 flex-shrink-0" 
-                      style={{ accentColor: '#FE0000' }}
-                      checked={formData.first_shift_agenda_store_tour}
-                      onChange={(e) => handleInputChange('first_shift_agenda_store_tour', e.target.checked)}
-                    />
-                    <span>Store Tour with a Meet & Greet of the awesome team!</span>
-                  </label>
+                <label className="flex items-start gap-3 text-base">
+                  <input 
+                    type="checkbox" 
+                    className="mt-1 w-5 h-5 flex-shrink-0" 
+                    style={{ accentColor: '#FE0000' }}
+                    checked={formData.first_shift_vault_induction_agenda}
+                    onChange={(e) => handleInputChange('first_shift_vault_induction_agenda', e.target.checked)}
+                  />
+                  <span>Vault Induction Agenda</span>
+                </label>
 
-                  <label className="flex items-start gap-3 text-sm text-gray-600">
-                    <input 
-                      type="checkbox" 
-                      className="mt-1 w-4 h-4 flex-shrink-0" 
-                      style={{ accentColor: '#FE0000' }}
-                      checked={formData.first_shift_agenda_hr_policies}
-                      onChange={(e) => handleInputChange('first_shift_agenda_hr_policies', e.target.checked)}
-                    />
-                    <span>Workplanner and HR policies – The Know-How!</span>
-                  </label>
-                </div>
+                <label className="flex items-start gap-3 text-base">
+                  <input 
+                    type="checkbox" 
+                    className="mt-1 w-5 h-5 flex-shrink-0" 
+                    style={{ accentColor: '#FE0000' }}
+                    checked={formData.first_shift_store_tour_agenda}
+                    onChange={(e) => handleInputChange('first_shift_store_tour_agenda', e.target.checked)}
+                  />
+                  <span>Store Tour Agenda</span>
+                </label>
+
+                <label className="flex items-start gap-3 text-base">
+                  <input 
+                    type="checkbox" 
+                    className="mt-1 w-5 h-5 flex-shrink-0" 
+                    style={{ accentColor: '#FE0000' }}
+                    checked={formData.first_shift_hr_policies_agenda}
+                    onChange={(e) => handleInputChange('first_shift_hr_policies_agenda', e.target.checked)}
+                  />
+                  <span>HR Policies Agenda</span>
+                </label>
 
                 <div className="border-t border-dashed border-gray-300 pt-4 mt-6 space-y-3">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -474,7 +442,7 @@ const ComprehensiveOnboarding = () => {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Signature of ARGM/RGM:
+                        Signature:
                       </label>
                       <Input
                         value={formData.first_shift_signature}
@@ -489,11 +457,11 @@ const ComprehensiveOnboarding = () => {
             </CardContent>
           </Card>
 
-          {/* Induction Vault Section */}
+          {/* Induction Vault */}
           <Card className="bg-white shadow-lg" style={{ borderLeft: '8px solid #FE0000' }}>
             <CardHeader className="p-6">
               <CardTitle className="text-xl font-bold" style={{ color: '#FE0000' }}>
-                Level Up with Induction 2.0 on Vault!
+                Induction Vault
               </CardTitle>
             </CardHeader>
             <CardContent className="p-6 pt-0">
@@ -503,8 +471,8 @@ const ComprehensiveOnboarding = () => {
                     type="checkbox" 
                     className="mt-1 w-5 h-5 flex-shrink-0" 
                     style={{ accentColor: '#FE0000' }}
-                    checked={formData.induction_vault_welcome_to_kfc}
-                    onChange={(e) => handleInputChange('induction_vault_welcome_to_kfc', e.target.checked)}
+                    checked={formData.induction_vault_welcome_kfc}
+                    onChange={(e) => handleInputChange('induction_vault_welcome_kfc', e.target.checked)}
                   />
                   <span>Welcome to KFC</span>
                 </label>
@@ -517,7 +485,7 @@ const ComprehensiveOnboarding = () => {
                     checked={formData.induction_vault_culture}
                     onChange={(e) => handleInputChange('induction_vault_culture', e.target.checked)}
                   />
-                  <span>Our Amazing Culture</span>
+                  <span>Culture Overview</span>
                 </label>
                 
                 <label className="flex items-start gap-3 text-base">
@@ -525,10 +493,10 @@ const ComprehensiveOnboarding = () => {
                     type="checkbox" 
                     className="mt-1 w-5 h-5 flex-shrink-0" 
                     style={{ accentColor: '#FE0000' }}
-                    checked={formData.induction_vault_behind_the_bucket}
-                    onChange={(e) => handleInputChange('induction_vault_behind_the_bucket', e.target.checked)}
+                    checked={formData.induction_vault_behind_bucket}
+                    onChange={(e) => handleInputChange('induction_vault_behind_bucket', e.target.checked)}
                   />
-                  <span>Behind the Bucket - The Inside Scoop!</span>
+                  <span>Behind the Bucket</span>
                 </label>
 
                 <label className="flex items-start gap-3 text-base">
@@ -539,7 +507,7 @@ const ComprehensiveOnboarding = () => {
                     checked={formData.induction_vault_serious_stuff}
                     onChange={(e) => handleInputChange('induction_vault_serious_stuff', e.target.checked)}
                   />
-                  <span>The Serious Stuff (But Still Fun!)</span>
+                  <span>Serious Stuff</span>
                 </label>
 
                 <label className="flex items-start gap-3 text-base">
@@ -550,7 +518,7 @@ const ComprehensiveOnboarding = () => {
                     checked={formData.induction_vault_answer_questions}
                     onChange={(e) => handleInputChange('induction_vault_answer_questions', e.target.checked)}
                   />
-                  <span>Keep an eye on the New TM and be ready to answer any questions – we're all in this together!</span>
+                  <span>Answer Questions</span>
                 </label>
 
                 <div className="border-t border-dashed border-gray-300 pt-4 mt-6 space-y-3">
@@ -568,7 +536,7 @@ const ComprehensiveOnboarding = () => {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Signature of ARGM/RGM:
+                        Signature:
                       </label>
                       <Input
                         value={formData.induction_vault_signature}
@@ -583,11 +551,11 @@ const ComprehensiveOnboarding = () => {
             </CardContent>
           </Card>
 
-          {/* Compliance Vault Section */}
+          {/* Compliance Vault */}
           <Card className="bg-white shadow-lg" style={{ borderLeft: '8px solid #FE0000' }}>
             <CardHeader className="p-6">
               <CardTitle className="text-xl font-bold" style={{ color: '#FE0000' }}>
-                Stay Sharp: Compliance Training on Vault!
+                Compliance Vault
               </CardTitle>
             </CardHeader>
             <CardContent className="p-6 pt-0">
@@ -600,7 +568,7 @@ const ComprehensiveOnboarding = () => {
                     checked={formData.compliance_vault_fire_safety}
                     onChange={(e) => handleInputChange('compliance_vault_fire_safety', e.target.checked)}
                   />
-                  <span>Fire Safety and Security for TMs</span>
+                  <span>Fire Safety</span>
                 </label>
                 
                 <label className="flex items-start gap-3 text-base">
@@ -611,7 +579,7 @@ const ComprehensiveOnboarding = () => {
                     checked={formData.compliance_vault_health_safety}
                     onChange={(e) => handleInputChange('compliance_vault_health_safety', e.target.checked)}
                   />
-                  <span>Health and Safety</span>
+                  <span>Health & Safety</span>
                 </label>
                 
                 <label className="flex items-start gap-3 text-base">
@@ -622,7 +590,7 @@ const ComprehensiveOnboarding = () => {
                     checked={formData.compliance_vault_harassment}
                     onChange={(e) => handleInputChange('compliance_vault_harassment', e.target.checked)}
                   />
-                  <span>Harassment</span>
+                  <span>Harassment Policies</span>
                 </label>
 
                 <label className="flex items-start gap-3 text-base">
@@ -633,7 +601,7 @@ const ComprehensiveOnboarding = () => {
                     checked={formData.compliance_vault_food_safety}
                     onChange={(e) => handleInputChange('compliance_vault_food_safety', e.target.checked)}
                   />
-                  <span>Food Safety for TMs</span>
+                  <span>Food Safety</span>
                 </label>
 
                 <label className="flex items-start gap-3 text-base">
@@ -644,7 +612,7 @@ const ComprehensiveOnboarding = () => {
                     checked={formData.compliance_vault_check_in}
                     onChange={(e) => handleInputChange('compliance_vault_check_in', e.target.checked)}
                   />
-                  <span>Check in with the New TM – any questions on this important stuff?</span>
+                  <span>Check In Procedures</span>
                 </label>
 
                 <label className="flex items-start gap-3 text-base">
@@ -652,10 +620,10 @@ const ComprehensiveOnboarding = () => {
                     type="checkbox" 
                     className="mt-1 w-5 h-5 flex-shrink-0" 
                     style={{ accentColor: '#FE0000' }}
-                    checked={formData.compliance_vault_ensure_break}
-                    onChange={(e) => handleInputChange('compliance_vault_ensure_break', e.target.checked)}
+                    checked={formData.compliance_vault_ensure_breaks}
+                    onChange={(e) => handleInputChange('compliance_vault_ensure_breaks', e.target.checked)}
                   />
-                  <span>Make sure the TM takes their well-deserved break!</span>
+                  <span>Ensure Breaks</span>
                 </label>
 
                 <div className="border-t border-dashed border-gray-300 pt-4 mt-6 space-y-3">
@@ -673,7 +641,7 @@ const ComprehensiveOnboarding = () => {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Signature of ARGM/RGM:
+                        Signature:
                       </label>
                       <Input
                         value={formData.compliance_vault_signature}
@@ -688,11 +656,11 @@ const ComprehensiveOnboarding = () => {
             </CardContent>
           </Card>
 
-          {/* Store Tour Section */}
+          {/* Tour */}
           <Card className="bg-white shadow-lg" style={{ borderLeft: '8px solid #FE0000' }}>
             <CardHeader className="p-6">
               <CardTitle className="text-xl font-bold" style={{ color: '#FE0000' }}>
-                The Grand Tour & Crew Huddle!
+                Tour
               </CardTitle>
             </CardHeader>
             <CardContent className="p-6 pt-0">
@@ -702,10 +670,10 @@ const ComprehensiveOnboarding = () => {
                     type="checkbox" 
                     className="mt-1 w-5 h-5 flex-shrink-0" 
                     style={{ accentColor: '#FE0000' }}
-                    checked={formData.tour_introduce_to_crew}
-                    onChange={(e) => handleInputChange('tour_introduce_to_crew', e.target.checked)}
+                    checked={formData.tour_introduce_crew}
+                    onChange={(e) => handleInputChange('tour_introduce_crew', e.target.checked)}
                   />
-                  <span>Introduce the New TM to all the friendly faces on shift that day.</span>
+                  <span>Introduce to Crew</span>
                 </label>
                 
                 <label className="flex items-start gap-3 text-base">
@@ -716,7 +684,7 @@ const ComprehensiveOnboarding = () => {
                     checked={formData.tour_show_restaurant}
                     onChange={(e) => handleInputChange('tour_show_restaurant', e.target.checked)}
                   />
-                  <span>Show the New TM every nook and cranny of the restaurant.</span>
+                  <span>Show Restaurant</span>
                 </label>
                 
                 <label className="flex items-start gap-3 text-base">
@@ -727,7 +695,7 @@ const ComprehensiveOnboarding = () => {
                     checked={formData.tour_explain_fire_safety}
                     onChange={(e) => handleInputChange('tour_explain_fire_safety', e.target.checked)}
                   />
-                  <span>Explain Fire Safety like a pro and point out all fire exits – safety is key!</span>
+                  <span>Explain Fire Safety</span>
                 </label>
 
                 <label className="flex items-start gap-3 text-base">
@@ -738,7 +706,7 @@ const ComprehensiveOnboarding = () => {
                     checked={formData.tour_show_welfare_area}
                     onChange={(e) => handleInputChange('tour_show_welfare_area', e.target.checked)}
                   />
-                  <span>Show the New TM the welfare area and highlight our super important food safety policies.</span>
+                  <span>Show Welfare Area</span>
                 </label>
 
                 <div className="border-t border-dashed border-gray-300 pt-4 mt-6 space-y-3">
@@ -756,7 +724,7 @@ const ComprehensiveOnboarding = () => {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Signature of ARGM/RGM:
+                        Signature:
                       </label>
                       <Input
                         value={formData.tour_signature}
@@ -771,11 +739,11 @@ const ComprehensiveOnboarding = () => {
             </CardContent>
           </Card>
 
-          {/* HR Documentation Section */}
+          {/* HR Policies */}
           <Card className="bg-white shadow-lg" style={{ borderLeft: '8px solid #FE0000' }}>
             <CardHeader className="p-6">
               <CardTitle className="text-xl font-bold" style={{ color: '#FE0000' }}>
-                The Nitty-Gritty: Schedules & HR Know-How
+                HR Policies
               </CardTitle>
             </CardHeader>
             <CardContent className="p-6 pt-0">
@@ -788,7 +756,7 @@ const ComprehensiveOnboarding = () => {
                     checked={formData.hr_review_work_planner}
                     onChange={(e) => handleInputChange('hr_review_work_planner', e.target.checked)}
                   />
-                  <span>Go through the work planner with the New TM and make sure they're crystal clear on all their shifts.</span>
+                  <span>Review Work Planner</span>
                 </label>
                 
                 <label className="flex items-start gap-3 text-base">
@@ -799,7 +767,7 @@ const ComprehensiveOnboarding = () => {
                     checked={formData.hr_check_preplanned_time_off}
                     onChange={(e) => handleInputChange('hr_check_preplanned_time_off', e.target.checked)}
                   />
-                  <span>Check if they have any pre-planned time off where they can't work and do your best to accommodate.</span>
+                  <span>Check Preplanned Time Off</span>
                 </label>
 
                 <label className="flex items-start gap-3 text-base">
@@ -810,7 +778,7 @@ const ComprehensiveOnboarding = () => {
                     checked={formData.hr_explain_sickness_policy}
                     onChange={(e) => handleInputChange('hr_explain_sickness_policy', e.target.checked)}
                   />
-                  <span>Explain the HR Policies regarding sickness and absence management – good to know!</span>
+                  <span>Explain Sickness Policy</span>
                 </label>
 
                 <div className="border-t border-dashed border-gray-300 pt-4 mt-6 space-y-3">
@@ -828,7 +796,7 @@ const ComprehensiveOnboarding = () => {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Signature of ARGM/RGM:
+                        Signature:
                       </label>
                       <Input
                         value={formData.hr_signature}
@@ -843,11 +811,11 @@ const ComprehensiveOnboarding = () => {
             </CardContent>
           </Card>
 
-          {/* Day Two Check-in Section */}
+          {/* Day Two */}
           <Card className="bg-white shadow-lg" style={{ borderLeft: '8px solid #FE0000' }}>
             <CardHeader className="p-6">
               <CardTitle className="text-xl font-bold" style={{ color: '#FE0000' }}>
-                Day Two: Doubling Down on Delicious!
+                Day Two
               </CardTitle>
             </CardHeader>
             <CardContent className="p-6 pt-0">
@@ -860,7 +828,7 @@ const ComprehensiveOnboarding = () => {
                     checked={formData.day_two_meet_buddy}
                     onChange={(e) => handleInputChange('day_two_meet_buddy', e.target.checked)}
                   />
-                  <span>The New TM should meet their awesome Station Buddy.</span>
+                  <span>Meet Buddy</span>
                 </label>
                 
                 <label className="flex items-start gap-3 text-base">
@@ -871,7 +839,7 @@ const ComprehensiveOnboarding = () => {
                     checked={formData.day_two_guided_practice}
                     onChange={(e) => handleInputChange('day_two_guided_practice', e.target.checked)}
                   />
-                  <span>The second shift should focus on training basic procedures and be a guided practice session – learning by doing!</span>
+                  <span>Guided Practice</span>
                 </label>
 
                 <label className="flex items-start gap-3 text-base">
@@ -882,7 +850,7 @@ const ComprehensiveOnboarding = () => {
                     checked={formData.day_two_assess_readiness}
                     onChange={(e) => handleInputChange('day_two_assess_readiness', e.target.checked)}
                   />
-                  <span>Time for a quick check-in: Assess if the New TM will be ready to fly solo from Shift 3. If not, whip up a plan to get them there!</span>
+                  <span>Assess Readiness</span>
                 </label>
 
                 <div className="border-t border-dashed border-gray-300 pt-4 mt-6 space-y-3">
@@ -900,7 +868,7 @@ const ComprehensiveOnboarding = () => {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Signature of ARGM/RGM:
+                        Signature:
                       </label>
                       <Input
                         value={formData.day_two_signature}
@@ -915,11 +883,11 @@ const ComprehensiveOnboarding = () => {
             </CardContent>
           </Card>
 
-          {/* Days 4-30 Section */}
+          {/* Day 4 to 30 */}
           <Card className="bg-white shadow-lg" style={{ borderLeft: '8px solid #FE0000' }}>
             <CardHeader className="p-6">
               <CardTitle className="text-xl font-bold" style={{ color: '#FE0000' }}>
-                Spreading Their Wings: Shift 4 to Day 30!
+                Day 4 to 30
               </CardTitle>
             </CardHeader>
             <CardContent className="p-6 pt-0">
@@ -932,7 +900,7 @@ const ComprehensiveOnboarding = () => {
                     checked={formData.day_4_to_30_working_unaided}
                     onChange={(e) => handleInputChange('day_4_to_30_working_unaided', e.target.checked)}
                   />
-                  <span>The New TM should be getting more comfortable on their station and working unaided – watch them shine!</span>
+                  <span>Working Unaided</span>
                 </label>
                 
                 <label className="flex items-start gap-3 text-base">
@@ -943,7 +911,7 @@ const ComprehensiveOnboarding = () => {
                     checked={formData.day_4_to_30_feedback_sessions}
                     onChange={(e) => handleInputChange('day_4_to_30_feedback_sessions', e.target.checked)}
                   />
-                  <span>Planned Feedback sessions with the RGM or ARGM should be documented – keep track of that awesome progress!</span>
+                  <span>Feedback Sessions</span>
                 </label>
 
                 <label className="flex items-start gap-3 text-base">
@@ -951,10 +919,10 @@ const ComprehensiveOnboarding = () => {
                     type="checkbox" 
                     className="mt-1 w-5 h-5 flex-shrink-0" 
                     style={{ accentColor: '#FE0000' }}
-                    checked={formData.day_4_to_30_vault_modules_completed}
-                    onChange={(e) => handleInputChange('day_4_to_30_vault_modules_completed', e.target.checked)}
+                    checked={formData.day_4_to_30_vault_modules}
+                    onChange={(e) => handleInputChange('day_4_to_30_vault_modules', e.target.checked)}
                   />
-                  <span>Vault Victory! All Vault modules for their first station should be smashed within the first 30 days.</span>
+                  <span>Vault Modules Completed</span>
                 </label>
 
                 <div className="border-t border-dashed border-gray-300 pt-4 mt-6 space-y-3">
@@ -972,7 +940,7 @@ const ComprehensiveOnboarding = () => {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Signature of ARGM/RGM:
+                        Signature:
                       </label>
                       <Input
                         value={formData.day_4_to_30_signature}
@@ -987,11 +955,11 @@ const ComprehensiveOnboarding = () => {
             </CardContent>
           </Card>
 
-          {/* Final Sign-off Section */}
+          {/* Final Sign Off */}
           <Card className="bg-white shadow-lg" style={{ borderLeft: '8px solid #00C851' }}>
             <CardHeader className="p-6">
               <CardTitle className="text-xl font-bold text-green-600">
-                The Final Flourish: Vault Sign-Off & Real-World Awesome!
+                Final Sign Off
               </CardTitle>
             </CardHeader>
             <CardContent className="p-6 pt-0">
@@ -1004,7 +972,7 @@ const ComprehensiveOnboarding = () => {
                     checked={formData.final_sign_off}
                     onChange={(e) => handleInputChange('final_sign_off', e.target.checked)}
                   />
-                  <span>Official Sign Off on Vault and Practical Observation completed. They're ready to rock!</span>
+                  <span>Final Sign Off</span>
                 </label>
 
                 <div className="border-t border-dashed border-gray-300 pt-4 mt-6 space-y-3">
@@ -1022,7 +990,7 @@ const ComprehensiveOnboarding = () => {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Signature of ARGM/RGM:
+                        Signature:
                       </label>
                       <Input
                         value={formData.final_sign_off_signature}
