@@ -1,6 +1,8 @@
 
 import React from 'react';
 import { Button } from "@/components/ui/button";
+import { Link, useLocation } from 'react-router-dom';
+import { Home, CheckSquare } from 'lucide-react';
 
 interface HeaderProps {
   userEmail: string;
@@ -8,11 +10,40 @@ interface HeaderProps {
 }
 
 const Header = ({ userEmail, onSignOut }: HeaderProps) => {
+  const location = useLocation();
+  
   return (
     <header className="bg-white shadow-sm border-b">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center py-4 sm:h-16 gap-4 sm:gap-0">
-          <h1 className="text-xl sm:text-2xl font-bold text-red-600">KFC Onboarding</h1>
+          <div className="flex items-center gap-6">
+            <h1 className="text-xl sm:text-2xl font-bold text-red-600">KFC Onboarding</h1>
+            
+            <nav className="flex gap-4">
+              <Link to="/">
+                <Button 
+                  variant={location.pathname === '/' ? "default" : "ghost"} 
+                  size="sm"
+                  className="flex items-center gap-2"
+                >
+                  <Home className="h-4 w-4" />
+                  Home
+                </Button>
+              </Link>
+              
+              <Link to="/comprehensive">
+                <Button 
+                  variant={location.pathname === '/comprehensive' ? "default" : "ghost"} 
+                  size="sm"
+                  className="flex items-center gap-2"
+                >
+                  <CheckSquare className="h-4 w-4" />
+                  Comprehensive
+                </Button>
+              </Link>
+            </nav>
+          </div>
+          
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 w-full sm:w-auto">
             <span className="text-xs sm:text-sm text-gray-600 truncate max-w-[200px] sm:max-w-none">
               Welcome, {userEmail}
