@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,6 +9,84 @@ import { useAuth } from "@/contexts/AuthContext";
 import Header from "@/components/Header";
 import { useSavedForms } from "@/hooks/useSavedForms";
 import { Save, Upload, Trash2 } from 'lucide-react';
+
+// Define the form data interface
+interface FormData {
+  team_member_name: string;
+  // Pre-flight checks
+  pre_flight_training_plan: boolean;
+  pre_flight_assign_buddy: boolean;
+  pre_flight_schedule_reviews: boolean;
+  pre_flight_completion_date: string;
+  pre_flight_signature: string;
+  // Day before
+  day_before_welcome_call_confirm_excitement: boolean;
+  day_before_welcome_call_confirm_shifts: boolean;
+  day_before_welcome_call_explain_first_day: boolean;
+  day_before_inform_crew: boolean;
+  day_before_check_uniform: boolean;
+  day_before_completion_date: string;
+  day_before_signature: string;
+  // First shift
+  first_shift_manager_onboarding: boolean;
+  first_shift_warm_welcome: boolean;
+  first_shift_prepare_locker: boolean;
+  first_shift_welcome_table: boolean;
+  first_shift_check_vault_id: boolean;
+  first_shift_check_clock_in: boolean;
+  first_shift_agenda_kfc_welcome: boolean;
+  first_shift_agenda_vault_induction: boolean;
+  first_shift_agenda_store_tour: boolean;
+  first_shift_agenda_hr_policies: boolean;
+  first_shift_completion_date: string;
+  first_shift_signature: string;
+  // Induction vault
+  induction_vault_welcome_to_kfc: boolean;
+  induction_vault_culture: boolean;
+  induction_vault_behind_the_bucket: boolean;
+  induction_vault_serious_stuff: boolean;
+  induction_vault_answer_questions: boolean;
+  induction_vault_completion_date: string;
+  induction_vault_signature: string;
+  // Compliance vault
+  compliance_vault_fire_safety: boolean;
+  compliance_vault_health_safety: boolean;
+  compliance_vault_harassment: boolean;
+  compliance_vault_food_safety: boolean;
+  compliance_vault_check_in: boolean;
+  compliance_vault_ensure_break: boolean;
+  compliance_vault_completion_date: string;
+  compliance_vault_signature: string;
+  // Tour
+  tour_introduce_to_crew: boolean;
+  tour_show_restaurant: boolean;
+  tour_explain_fire_safety: boolean;
+  tour_show_welfare_area: boolean;
+  tour_completion_date: string;
+  tour_signature: string;
+  // HR
+  hr_review_work_planner: boolean;
+  hr_check_preplanned_time_off: boolean;
+  hr_explain_sickness_policy: boolean;
+  hr_completion_date: string;
+  hr_signature: string;
+  // Day two
+  day_two_meet_buddy: boolean;
+  day_two_guided_practice: boolean;
+  day_two_assess_readiness: boolean;
+  day_two_completion_date: string;
+  day_two_signature: string;
+  // Day 4 to 30
+  day_4_to_30_working_unaided: boolean;
+  day_4_to_30_feedback_sessions: boolean;
+  day_4_to_30_vault_modules_completed: boolean;
+  day_4_to_30_completion_date: string;
+  day_4_to_30_signature: string;
+  // Final sign off
+  final_sign_off: boolean;
+  final_sign_off_completion_date: string;
+  final_sign_off_signature: string;
+}
 
 const Index = () => {
   const { toast } = useToast();
@@ -25,8 +104,8 @@ const Index = () => {
   const [formName, setFormName] = useState('');
   const [loadDialogOpen, setLoadDialogOpen] = useState(false);
 
-  // formData state
-  const [formData, setFormData] = useState({
+  // formData state with proper typing
+  const [formData, setFormData] = useState<FormData>({
     team_member_name: '',
     // Pre-flight checks
     pre_flight_training_plan: false,
@@ -395,7 +474,8 @@ const Index = () => {
   const handleLoadForm = async (formId: string) => {
     try {
       const loadedData = await loadForm(formId);
-      setFormData(loadedData);
+      // Type assertion to ensure the loaded data matches our FormData interface
+      setFormData(loadedData as FormData);
       toast({
         title: "Success!",
         description: "Form loaded successfully!",
@@ -424,6 +504,149 @@ const Index = () => {
         variant: "destructive",
       });
     }
+  };
+
+  const formatFormForEmail = () => {
+    const sections = [
+      {
+        title: "TEAM MEMBER DETAILS",
+        items: [
+          { label: "Team Member Name", value: formData.team_member_name }
+        ]
+      },
+      {
+        title: "PRE-FLIGHT CHECKS",
+        items: [
+          { label: "Training Plan Created", value: formData.pre_flight_training_plan ? "✅ Completed" : "❌ Not Done" },
+          { label: "Buddy Assigned", value: formData.pre_flight_assign_buddy ? "✅ Completed" : "❌ Not Done" },
+          { label: "Reviews Scheduled", value: formData.pre_flight_schedule_reviews ? "✅ Completed" : "❌ Not Done" },
+          { label: "Completion Date", value: formData.pre_flight_completion_date || "Not Set" },
+          { label: "Signature", value: formData.pre_flight_signature || "Not Signed" }
+        ]
+      },
+      {
+        title: "DAY BEFORE",
+        items: [
+          { label: "Welcome Call - Confirm Excitement", value: formData.day_before_welcome_call_confirm_excitement ? "✅ Completed" : "❌ Not Done" },
+          { label: "Welcome Call - Confirm Shifts", value: formData.day_before_welcome_call_confirm_shifts ? "✅ Completed" : "❌ Not Done" },
+          { label: "Welcome Call - Explain First Day", value: formData.day_before_welcome_call_explain_first_day ? "✅ Completed" : "❌ Not Done" },
+          { label: "Inform Crew", value: formData.day_before_inform_crew ? "✅ Completed" : "❌ Not Done" },
+          { label: "Check Uniform", value: formData.day_before_check_uniform ? "✅ Completed" : "❌ Not Done" },
+          { label: "Completion Date", value: formData.day_before_completion_date || "Not Set" },
+          { label: "Signature", value: formData.day_before_signature || "Not Signed" }
+        ]
+      },
+      {
+        title: "FIRST SHIFT",
+        items: [
+          { label: "Manager Onboarding", value: formData.first_shift_manager_onboarding ? "✅ Completed" : "❌ Not Done" },
+          { label: "Warm Welcome", value: formData.first_shift_warm_welcome ? "✅ Completed" : "❌ Not Done" },
+          { label: "Prepare Locker", value: formData.first_shift_prepare_locker ? "✅ Completed" : "❌ Not Done" },
+          { label: "Welcome Table", value: formData.first_shift_welcome_table ? "✅ Completed" : "❌ Not Done" },
+          { label: "Check Vault ID", value: formData.first_shift_check_vault_id ? "✅ Completed" : "❌ Not Done" },
+          { label: "Check Clock In", value: formData.first_shift_check_clock_in ? "✅ Completed" : "❌ Not Done" },
+          { label: "KFC Welcome Agenda", value: formData.first_shift_agenda_kfc_welcome ? "✅ Completed" : "❌ Not Done" },
+          { label: "Vault Induction Agenda", value: formData.first_shift_agenda_vault_induction ? "✅ Completed" : "❌ Not Done" },
+          { label: "Store Tour Agenda", value: formData.first_shift_agenda_store_tour ? "✅ Completed" : "❌ Not Done" },
+          { label: "HR Policies Agenda", value: formData.first_shift_agenda_hr_policies ? "✅ Completed" : "❌ Not Done" },
+          { label: "Completion Date", value: formData.first_shift_completion_date || "Not Set" },
+          { label: "Signature", value: formData.first_shift_signature || "Not Signed" }
+        ]
+      },
+      {
+        title: "INDUCTION VAULT",
+        items: [
+          { label: "Welcome to KFC", value: formData.induction_vault_welcome_to_kfc ? "✅ Completed" : "❌ Not Done" },
+          { label: "Culture Overview", value: formData.induction_vault_culture ? "✅ Completed" : "❌ Not Done" },
+          { label: "Behind the Bucket", value: formData.induction_vault_behind_the_bucket ? "✅ Completed" : "❌ Not Done" },
+          { label: "Serious Stuff", value: formData.induction_vault_serious_stuff ? "✅ Completed" : "❌ Not Done" },
+          { label: "Answer Questions", value: formData.induction_vault_answer_questions ? "✅ Completed" : "❌ Not Done" },
+          { label: "Completion Date", value: formData.induction_vault_completion_date || "Not Set" },
+          { label: "Signature", value: formData.induction_vault_signature || "Not Signed" }
+        ]
+      },
+      {
+        title: "COMPLIANCE VAULT",
+        items: [
+          { label: "Fire Safety", value: formData.compliance_vault_fire_safety ? "✅ Completed" : "❌ Not Done" },
+          { label: "Health & Safety", value: formData.compliance_vault_health_safety ? "✅ Completed" : "❌ Not Done" },
+          { label: "Harassment Policies", value: formData.compliance_vault_harassment ? "✅ Completed" : "❌ Not Done" },
+          { label: "Food Safety", value: formData.compliance_vault_food_safety ? "✅ Completed" : "❌ Not Done" },
+          { label: "Check In Procedures", value: formData.compliance_vault_check_in ? "✅ Completed" : "❌ Not Done" },
+          { label: "Ensure Breaks", value: formData.compliance_vault_ensure_break ? "✅ Completed" : "❌ Not Done" },
+          { label: "Completion Date", value: formData.compliance_vault_completion_date || "Not Set" },
+          { label: "Signature", value: formData.compliance_vault_signature || "Not Signed" }
+        ]
+      },
+      {
+        title: "TOUR",
+        items: [
+          { label: "Introduce to Crew", value: formData.tour_introduce_to_crew ? "✅ Completed" : "❌ Not Done" },
+          { label: "Show Restaurant", value: formData.tour_show_restaurant ? "✅ Completed" : "❌ Not Done" },
+          { label: "Explain Fire Safety", value: formData.tour_explain_fire_safety ? "✅ Completed" : "❌ Not Done" },
+          { label: "Show Welfare Area", value: formData.tour_show_welfare_area ? "✅ Completed" : "❌ Not Done" },
+          { label: "Completion Date", value: formData.tour_completion_date || "Not Set" },
+          { label: "Signature", value: formData.tour_signature || "Not Signed" }
+        ]
+      },
+      {
+        title: "HR POLICIES",
+        items: [
+          { label: "Review Work Planner", value: formData.hr_review_work_planner ? "✅ Completed" : "❌ Not Done" },
+          { label: "Check Preplanned Time Off", value: formData.hr_check_preplanned_time_off ? "✅ Completed" : "❌ Not Done" },
+          { label: "Explain Sickness Policy", value: formData.hr_explain_sickness_policy ? "✅ Completed" : "❌ Not Done" },
+          { label: "Completion Date", value: formData.hr_completion_date || "Not Set" },
+          { label: "Signature", value: formData.hr_signature || "Not Signed" }
+        ]
+      },
+      {
+        title: "DAY TWO",
+        items: [
+          { label: "Meet Buddy", value: formData.day_two_meet_buddy ? "✅ Completed" : "❌ Not Done" },
+          { label: "Guided Practice", value: formData.day_two_guided_practice ? "✅ Completed" : "❌ Not Done" },
+          { label: "Assess Readiness", value: formData.day_two_assess_readiness ? "✅ Completed" : "❌ Not Done" },
+          { label: "Completion Date", value: formData.day_two_completion_date || "Not Set" },
+          { label: "Signature", value: formData.day_two_signature || "Not Signed" }
+        ]
+      },
+      {
+        title: "DAY 4 TO 30",
+        items: [
+          { label: "Working Unaided", value: formData.day_4_to_30_working_unaided ? "✅ Completed" : "❌ Not Done" },
+          { label: "Feedback Sessions", value: formData.day_4_to_30_feedback_sessions ? "✅ Completed" : "❌ Not Done" },
+          { label: "Vault Modules Completed", value: formData.day_4_to_30_vault_modules_completed ? "✅ Completed" : "❌ Not Done" },
+          { label: "Completion Date", value: formData.day_4_to_30_completion_date || "Not Set" },
+          { label: "Signature", value: formData.day_4_to_30_signature || "Not Signed" }
+        ]
+      },
+      {
+        title: "FINAL SIGN OFF",
+        items: [
+          { label: "Final Sign Off", value: formData.final_sign_off ? "✅ Completed" : "❌ Not Done" },
+          { label: "Completion Date", value: formData.final_sign_off_completion_date || "Not Set" },
+          { label: "Signature", value: formData.final_sign_off_signature || "Not Signed" }
+        ]
+      }
+    ];
+
+    let formattedText = `🐔 KFC ONBOARDING FORM SUBMISSION\n`;
+    formattedText += `==========================================\n`;
+    formattedText += `Submitted on: ${new Date().toLocaleString()}\n`;
+    formattedText += `Submitted by: ${user?.email || 'Unknown'}\n\n`;
+
+    sections.forEach(section => {
+      formattedText += `📋 ${section.title}\n`;
+      formattedText += `${"=".repeat(section.title.length + 4)}\n`;
+      section.items.forEach(item => {
+        formattedText += `• ${item.label}: ${item.value}\n`;
+      });
+      formattedText += `\n`;
+    });
+
+    formattedText += `\n🎉 Thank you for completing the KFC Onboarding process!\n`;
+    formattedText += `It's Finger Lickin' Good! 🍗\n`;
+
+    return formattedText;
   };
 
   if (!user) {
