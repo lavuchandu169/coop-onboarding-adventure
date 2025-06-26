@@ -2,11 +2,36 @@
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useToast } from "@/hooks/use-toast";
+import OnboardingForm from "@/components/OnboardingForm";
+import Header from "@/components/Header";
+
+interface FormData {
+  fullName: string;
+  email: string;
+  phone: string;
+  position: string;
+  department: string;
+  startDate: string;
+}
 
 const Index = () => {
   const { user, signOut, loading } = useAuth();
   const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const [formData, setFormData] = useState<FormData>({
+    fullName: '',
+    email: user?.email || '',
+    phone: '',
+    position: '',
+    department: '',
+    startDate: ''
+  });
+
+  const [saveDialogOpen, setSaveDialogOpen] = useState(false);
+  const [formName, setFormName] = useState('');
 
   useEffect(() => {
     if (!loading && !user) {
@@ -14,9 +39,39 @@ const Index = () => {
     }
   }, [user, loading, navigate]);
 
+  useEffect(() => {
+    if (user?.email) {
+      setFormData(prev => ({ ...prev, email: user.email || '' }));
+    }
+  }, [user]);
+
   const handleSignOut = async () => {
     await signOut();
     navigate('/auth');
+  };
+
+  const handleInputChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleSaveForm = () => {
+    if (!formName.trim()) {
+      toast({
+        title: "Error",
+        description: "Please enter a form name",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Save form logic would go here
+    toast({
+      title: "Success!",
+      description: `Form "${formName}" saved successfully!`,
+    });
+    
+    setSaveDialogOpen(false);
+    setFormName('');
   };
 
   if (loading) {
@@ -33,26 +88,28 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gray-100">
+      <Header userEmail={user.email || ''} onSignOut={handleSignOut} />
+      
       <div className="container mx-auto py-8 px-4">
-        <div className="bg-white rounded-lg shadow-lg p-8">
+        <div className="max-w-4xl mx-auto">
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-red-600 mb-4">
               Welcome to KFC Onboarding Adventure!
             </h1>
             <p className="text-xl text-gray-600">
-              Hello, {user.email}! You've successfully logged in.
+              Please complete your onboarding information below
             </p>
           </div>
           
-          <div className="flex justify-center space-x-4">
-            <Button 
-              onClick={handleSignOut}
-              variant="outline"
-              className="border-red-600 text-red-600 hover:bg-red-50"
-            >
-              Sign Out
-            </Button>
-          </div>
+          <OnboardingForm
+            formData={formData}
+            onInputChange={handleInputChange}
+            saveDialogOpen={saveDialogOpen}
+            setSaveDialogOpen={setSaveDialogOpen}
+            formName={formName}
+            setFormName={setFormName}
+            onSaveForm={handleSaveForm}
+          />
         </div>
       </div>
       
