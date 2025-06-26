@@ -24,12 +24,19 @@ export const useSavedForms = () => {
 
     setLoading(true);
     try {
+      console.log('Fetching saved forms for user:', user.id);
       const { data, error } = await supabase
         .from('saved_forms')
         .select('*')
+        .eq('user_id', user.id)
         .order('updated_at', { ascending: false });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Error fetching saved forms:', error);
+        throw error;
+      }
+      
+      console.log('Fetched saved forms:', data);
       setSavedForms(data || []);
     } catch (error) {
       console.error('Error fetching saved forms:', error);
@@ -44,30 +51,55 @@ export const useSavedForms = () => {
   };
 
   const saveForm = async (formName: string, formData: any, formType: string = 'basic') => {
-    if (!user) return;
+    if (!user) {
+      toast({
+        title: "Error",
+        description: "You must be logged in to save forms.",
+        variant: "destructive",
+      });
+      return false;
+    }
+
+    if (!formName.trim()) {
+      toast({
+        title: "Error",
+        description: "Please enter a form name.",
+        variant: "destructive",
+      });
+      return false;
+    }
 
     try {
-      // Check if form with same name exists
+      console.log('Saving form:', { formName, formType, userId: user.id });
+      
+      // Check if form with same name and type exists for this user
       const { data: existingForms, error: checkError } = await supabase
         .from('saved_forms')
         .select('id')
         .eq('user_id', user.id)
-        .eq('form_name', formName);
+        .eq('form_name', formName)
+        .eq('form_type', formType);
 
-      if (checkError) throw checkError;
+      if (checkError) {
+        console.error('Error checking existing forms:', checkError);
+        throw checkError;
+      }
 
       if (existingForms && existingForms.length > 0) {
         // Update existing form
+        console.log('Updating existing form:', existingForms[0].id);
         const { error: updateError } = await supabase
           .from('saved_forms')
           .update({
             form_data: formData,
-            form_type: formType,
             updated_at: new Date().toISOString()
           })
           .eq('id', existingForms[0].id);
 
-        if (updateError) throw updateError;
+        if (updateError) {
+          console.error('Error updating form:', updateError);
+          throw updateError;
+        }
 
         toast({
           title: "Success!",
@@ -75,6 +107,7 @@ export const useSavedForms = () => {
         });
       } else {
         // Insert new form
+        console.log('Creating new form');
         const { error: insertError } = await supabase
           .from('saved_forms')
           .insert({
@@ -84,7 +117,10 @@ export const useSavedForms = () => {
             form_type: formType,
           });
 
-        if (insertError) throw insertError;
+        if (insertError) {
+          console.error('Error inserting form:', insertError);
+          throw insertError;
+        }
 
         toast({
           title: "Success!",
@@ -93,25 +129,41 @@ export const useSavedForms = () => {
       }
 
       fetchSavedForms();
+      return true;
     } catch (error) {
       console.error('Error saving form:', error);
       toast({
         title: "Error",
-        description: "Failed to save form.",
+        description: "Failed to save form. Please try again.",
         variant: "destructive",
       });
+      return false;
     }
   };
 
   const loadForm = async (formId: string) => {
+    if (!user) {
+      toast({
+        title: "Error",
+        description: "You must be logged in to load forms.",
+        variant: "destructive",
+      });
+      return null;
+    }
+
     try {
+      console.log('Loading form:', formId);
       const { data, error } = await supabase
         .from('saved_forms')
         .select('form_data')
         .eq('id', formId)
+        .eq('user_id', user.id)
         .single();
 
-      if (error) throw error;
+      if (error) {
+        console.error('Error loading form:', error);
+        throw error;
+      }
       
       toast({
         title: "Success!",
@@ -131,13 +183,27 @@ export const useSavedForms = () => {
   };
 
   const deleteForm = async (formId: string) => {
+    if (!user) {
+      toast({
+        title: "Error",
+        description: "You must be logged in to delete forms.",
+        variant: "destructive",
+      });
+      return false;
+    }
+
     try {
+      console.log('Deleting form:', formId);
       const { error } = await supabase
         .from('saved_forms')
         .delete()
-        .eq('id', formId);
+        .eq('id', formId)
+        .eq('user_id', user.id);
 
-      if (error) throw error;
+      if (error) {
+        console.error('Error deleting form:', error);
+        throw error;
+      }
 
       toast({
         title: "Success!",
@@ -145,6 +211,7 @@ export const useSavedForms = () => {
       });
 
       fetchSavedForms();
+      return true;
     } catch (error) {
       console.error('Error deleting form:', error);
       toast({
@@ -152,11 +219,14 @@ export const useSavedForms = () => {
         description: "Failed to delete form.",
         variant: "destructive",
       });
+      return false;
     }
   };
 
   useEffect(() => {
-    fetchSavedForms();
+    if (user) {
+      fetchSavedForms();
+    }
   }, [user]);
 
   return {

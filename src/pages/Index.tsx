@@ -42,9 +42,11 @@ const Index = () => {
 
   const handleSaveForm = async () => {
     if (formName.trim()) {
-      await saveForm(formName, formData);
-      setSaveDialogOpen(false);
-      setFormName('');
+      const success = await saveForm(formName, formData, 'basic');
+      if (success) {
+        setSaveDialogOpen(false);
+        setFormName('');
+      }
     }
   };
 
@@ -94,6 +96,7 @@ const Index = () => {
               loading={loading}
               onLoadForm={handleLoadForm}
               onDeleteForm={deleteForm}
+              formType="basic"
             />
           </div>
         </div>
