@@ -1,11 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
+import { useSavedForms } from "@/hooks/useSavedForms";
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
+  const { user, signOut } = useAuth();
+  const { savedForms, saveForm, loadForm, deleteForm } = useSavedForms();
   const { toast } = useToast();
+  const navigate = useNavigate();
+  const [showSaveDialog, setShowSaveDialog] = useState(false);
+  const [formName, setFormName] = useState('');
+
+  // Redirect to auth if not logged in
+  useEffect(() => {
+    if (!user) {
+      navigate('/auth');
+    }
+  }, [user, navigate]);
+
   const [formData, setFormData] = useState({
     team_member_name: '',
     // Pre-flight checks
@@ -88,6 +104,32 @@ const Index = () => {
       ...prev,
       [name]: value
     }));
+  };
+
+  const handleSaveForm = async () => {
+    if (!formName.trim()) {
+      toast({
+        title: "Error",
+        description: "Please enter a name for the form.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    await saveForm(formName, formData);
+    setShowSaveDialog(false);
+    setFormName('');
+  };
+
+  const handleLoadForm = async (formId: string) => {
+    const loadedData = await loadForm(formId);
+    if (loadedData) {
+      setFormData(loadedData);
+      toast({
+        title: "Success!",
+        description: "Form loaded successfully!",
+      });
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -209,6 +251,10 @@ const Index = () => {
     }
   };
 
+  if (!user) {
+    return null; // Will redirect to auth
+  }
+
   return (
     <div className="min-h-screen bg-gray-100">
       <style>{`
@@ -246,9 +292,91 @@ const Index = () => {
       `}</style>
 
       <header className="header-kfc rounded-t-lg">
-        <div className="kfc-logo-font">KFC</div>
-        Team Member: Welcome to the Coop! <br className="md:hidden"/> Your Onboarding Adventure!
+        <div className="flex justify-between items-center">
+          <div className="flex-1">
+            <div className="kfc-logo-font">KFC</div>
+            Team Member: Welcome to the Coop! <br className="md:hidden"/> Your Onboarding Adventure!
+          </div>
+          <div className="flex gap-2">
+            <Button
+              onClick={() => setShowSaveDialog(true)}
+              className="bg-white text-red-600 hover:bg-gray-100"
+            >
+              Save Form
+            </Button>
+            <Button
+              onClick={signOut}
+              className="bg-white text-red-600 hover:bg-gray-100"
+            >
+              Sign Out
+            </Button>
+          </div>
+        </div>
       </header>
+
+      {/* Saved Forms Section */}
+      {savedForms.length > 0 && (
+        <div className="max-w-4xl mx-auto p-4">
+          <div className="section-card">
+            <h2 className="section-title kfc-red">Saved Forms</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {savedForms.map((form) => (
+                <div key={form.id} className="border rounded-lg p-4">
+                  <h3 className="font-semibold">{form.form_name}</h3>
+                  <p className="text-sm text-gray-600">
+                    Saved: {new Date(form.created_at).toLocaleDateString()}
+                  </p>
+                  <div className="flex gap-2 mt-2">
+                    <Button
+                      size="sm"
+                      onClick={() => handleLoadForm(form.id)}
+                      className="kfc-bg-red hover:bg-red-700"
+                    >
+                      Load
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={() => deleteForm(form.id)}
+                    >
+                      Delete
+                    </Button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Save Form Dialog */}
+      {showSaveDialog && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg max-w-md w-full mx-4">
+            <h3 className="text-lg font-semibold mb-4">Save Form</h3>
+            <Input
+              placeholder="Enter form name"
+              value={formName}
+              onChange={(e) => setFormName(e.target.value)}
+              className="mb-4"
+            />
+            <div className="flex gap-2">
+              <Button onClick={handleSaveForm} className="kfc-bg-red hover:bg-red-700">
+                Save
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setShowSaveDialog(false);
+                  setFormName('');
+                }}
+              >
+                Cancel
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="max-w-4xl mx-auto mt-8 p-4 md:p-8">
         <div className="section-card">
