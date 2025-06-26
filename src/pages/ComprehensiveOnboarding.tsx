@@ -5,171 +5,22 @@ import { useSavedForms } from '@/hooks/useSavedForms';
 import Header from '@/components/Header';
 import SavedFormsList from '@/components/SavedFormsList';
 import SaveFormDialog from '@/components/SaveFormDialog';
+import PreFlightChecks from '@/components/PreFlightChecks';
+import CheckboxSection from '@/components/CheckboxSection';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from '@/hooks/use-toast';
-
-interface ComprehensiveFormData {
-  // Pre-Flight Checks
-  teamMemberName: string;
-  trainingPlanCreated: boolean;
-  rgmWelcomeScheduled: boolean;
-  stationBuddyAssigned: string;
-  feedbackScheduled: boolean;
-  preFlightCompletionDate: string;
-  preFlightSignature: string;
-
-  // Day Before
-  welcomeCallConfirmExcitement: boolean;
-  welcomeCallConfirmShifts: boolean;
-  welcomeCallExplainFirstDay: boolean;
-  informCrew: boolean;
-  checkUniform: boolean;
-  dayBeforeCompletionDate: string;
-  dayBeforeSignature: string;
-
-  // First Shift
-  managerOnboarding: boolean;
-  warmWelcome: boolean;
-  prepareLocker: boolean;
-  welcomeTable: boolean;
-  checkVaultId: boolean;
-  checkClockIn: boolean;
-  kfcWelcomeAgenda: boolean;
-  vaultInductionAgenda: boolean;
-  storeTourAgenda: boolean;
-  hrPoliciesAgenda: boolean;
-  firstShiftCompletionDate: string;
-  firstShiftSignature: string;
-
-  // Induction Vault
-  welcomeToKfc: boolean;
-  cultureOverview: boolean;
-  behindTheBucket: boolean;
-  seriousStuff: boolean;
-  answerQuestions: boolean;
-  inductionVaultCompletionDate: string;
-  inductionVaultSignature: string;
-
-  // Compliance Vault
-  fireSafety: boolean;
-  healthSafety: boolean;
-  harassmentPolicies: boolean;
-  foodSafety: boolean;
-  checkInProcedures: boolean;
-  ensureBreaks: boolean;
-  complianceVaultCompletionDate: string;
-  complianceVaultSignature: string;
-
-  // Tour
-  introduceToCrew: boolean;
-  showRestaurant: boolean;
-  explainFireSafety: boolean;
-  showWelfareArea: boolean;
-  tourCompletionDate: string;
-  tourSignature: string;
-
-  // HR Policies
-  reviewWorkPlanner: boolean;
-  checkPreplannedTimeOff: boolean;
-  explainSicknessPolicy: boolean;
-  hrPoliciesCompletionDate: string;
-  hrPoliciesSignature: string;
-
-  // Day Two
-  meetBuddy: boolean;
-  guidedPractice: boolean;
-  assessReadiness: boolean;
-  dayTwoCompletionDate: string;
-  dayTwoSignature: string;
-
-  // Day 4 to 30
-  workingUnaided: boolean;
-  feedbackSessions: boolean;
-  vaultModulesCompleted: boolean;
-  day4To30CompletionDate: string;
-  day4To30Signature: string;
-
-  // Final Sign Off
-  finalSignOff: boolean;
-  finalSignOffCompletionDate: string;
-  finalSignOffSignature: string;
-}
+import { ComprehensiveFormData } from '@/types/ComprehensiveFormData';
+import { createDefaultFormData } from '@/utils/createDefaultFormData';
+import { submitComprehensiveForm } from '@/utils/comprehensiveFormSubmission';
 
 const ComprehensiveOnboarding = () => {
   const { user, signOut } = useAuth();
   const { savedForms, loading, saveForm, loadForm, deleteForm } = useSavedForms();
   const { toast } = useToast();
 
-  const [formData, setFormData] = useState<ComprehensiveFormData>({
-    teamMemberName: '',
-    trainingPlanCreated: false,
-    rgmWelcomeScheduled: false,
-    stationBuddyAssigned: '',
-    feedbackScheduled: false,
-    preFlightCompletionDate: '',
-    preFlightSignature: '',
-    welcomeCallConfirmExcitement: false,
-    welcomeCallConfirmShifts: false,
-    welcomeCallExplainFirstDay: false,
-    informCrew: false,
-    checkUniform: false,
-    dayBeforeCompletionDate: '',
-    dayBeforeSignature: '',
-    managerOnboarding: false,
-    warmWelcome: false,
-    prepareLocker: false,
-    welcomeTable: false,
-    checkVaultId: false,
-    checkClockIn: false,
-    kfcWelcomeAgenda: false,
-    vaultInductionAgenda: false,
-    storeTourAgenda: false,
-    hrPoliciesAgenda: false,
-    firstShiftCompletionDate: '',
-    firstShiftSignature: '',
-    welcomeToKfc: false,
-    cultureOverview: false,
-    behindTheBucket: false,
-    seriousStuff: false,
-    answerQuestions: false,
-    inductionVaultCompletionDate: '',
-    inductionVaultSignature: '',
-    fireSafety: false,
-    healthSafety: false,
-    harassmentPolicies: false,
-    foodSafety: false,
-    checkInProcedures: false,
-    ensureBreaks: false,
-    complianceVaultCompletionDate: '',
-    complianceVaultSignature: '',
-    introduceToCrew: false,
-    showRestaurant: false,
-    explainFireSafety: false,
-    showWelfareArea: false,
-    tourCompletionDate: '',
-    tourSignature: '',
-    reviewWorkPlanner: false,
-    checkPreplannedTimeOff: false,
-    explainSicknessPolicy: false,
-    hrPoliciesCompletionDate: '',
-    hrPoliciesSignature: '',
-    meetBuddy: false,
-    guidedPractice: false,
-    assessReadiness: false,
-    dayTwoCompletionDate: '',
-    dayTwoSignature: '',
-    workingUnaided: false,
-    feedbackSessions: false,
-    vaultModulesCompleted: false,
-    day4To30CompletionDate: '',
-    day4To30Signature: '',
-    finalSignOff: false,
-    finalSignOffCompletionDate: '',
-    finalSignOffSignature: '',
-  });
-
+  const [formData, setFormData] = useState<ComprehensiveFormData>(createDefaultFormData());
   const [saveDialogOpen, setSaveDialogOpen] = useState(false);
   const [formName, setFormName] = useState('');
 
@@ -198,7 +49,6 @@ const ComprehensiveOnboarding = () => {
   };
 
   const handleSubmit = async () => {
-    // Validate required fields
     if (!formData.teamMemberName) {
       toast({
         title: "Missing Information",
@@ -209,44 +59,7 @@ const ComprehensiveOnboarding = () => {
     }
 
     try {
-      // Create FormData for FormSubmit.co
-      const submitData = new FormData();
-      submitData.append('_subject', 'KFC Comprehensive Onboarding Checklist Submission');
-      submitData.append('_captcha', 'false');
-      submitData.append('_template', 'table');
-      
-      // Add basic info
-      submitData.append('Team Member Name', formData.teamMemberName);
-      submitData.append('Form Type', 'Comprehensive Onboarding Checklist');
-      submitData.append('Submission Time', new Date().toLocaleString());
-      
-      // Add checklist data
-      submitData.append('Training Plan Created', formData.trainingPlanCreated ? 'Yes' : 'No');
-      submitData.append('RGM Welcome Scheduled', formData.rgmWelcomeScheduled ? 'Yes' : 'No');
-      submitData.append('Station Buddy Assigned', formData.stationBuddyAssigned || 'Not specified');
-      submitData.append('Feedback Scheduled', formData.feedbackScheduled ? 'Yes' : 'No');
-      submitData.append('Pre-flight Completion Date', formData.preFlightCompletionDate || 'Not set');
-      submitData.append('Pre-flight Signature', formData.preFlightSignature || 'Not signed');
-      
-      // Add other sections
-      submitData.append('Welcome Call - Confirm Excitement', formData.welcomeCallConfirmExcitement ? 'Yes' : 'No');
-      submitData.append('Welcome Call - Confirm Shifts', formData.welcomeCallConfirmShifts ? 'Yes' : 'No');
-      submitData.append('Welcome Call - Explain First Day', formData.welcomeCallExplainFirstDay ? 'Yes' : 'No');
-      submitData.append('Day Before Completion Date', formData.dayBeforeCompletionDate || 'Not set');
-      submitData.append('Day Before Signature', formData.dayBeforeSignature || 'Not signed');
-      
-      submitData.append('Manager Onboarding', formData.managerOnboarding ? 'Yes' : 'No');
-      submitData.append('First Shift Completion Date', formData.firstShiftCompletionDate || 'Not set');
-      submitData.append('First Shift Signature', formData.firstShiftSignature || 'Not signed');
-      
-      submitData.append('Final Sign Off', formData.finalSignOff ? 'Yes' : 'No');
-      submitData.append('Final Sign Off Date', formData.finalSignOffCompletionDate || 'Not set');
-      submitData.append('Final Sign Off Signature', formData.finalSignOffSignature || 'Not signed');
-
-      const response = await fetch('https://formsubmit.co/jennifer.delahunt@yum.com', {
-        method: 'POST',
-        body: submitData
-      });
+      const response = await submitComprehensiveForm(formData);
 
       if (response.ok) {
         toast({
@@ -269,6 +82,69 @@ const ComprehensiveOnboarding = () => {
   if (!user) {
     return null;
   }
+
+  const dayBeforeItems = [
+    { key: 'welcomeCallConfirmExcitement' as keyof ComprehensiveFormData, label: 'Welcome Call - Confirm Excitement' },
+    { key: 'welcomeCallConfirmShifts' as keyof ComprehensiveFormData, label: 'Welcome Call - Confirm Shifts' },
+    { key: 'welcomeCallExplainFirstDay' as keyof ComprehensiveFormData, label: 'Welcome Call - Explain First Day' },
+    { key: 'informCrew' as keyof ComprehensiveFormData, label: 'Inform Crew' },
+    { key: 'checkUniform' as keyof ComprehensiveFormData, label: 'Check Uniform' }
+  ];
+
+  const firstShiftItems = [
+    { key: 'managerOnboarding' as keyof ComprehensiveFormData, label: 'Manager Onboarding' },
+    { key: 'warmWelcome' as keyof ComprehensiveFormData, label: 'Warm Welcome' },
+    { key: 'prepareLocker' as keyof ComprehensiveFormData, label: 'Prepare Locker' },
+    { key: 'welcomeTable' as keyof ComprehensiveFormData, label: 'Welcome Table' },
+    { key: 'checkVaultId' as keyof ComprehensiveFormData, label: 'Check Vault ID' },
+    { key: 'checkClockIn' as keyof ComprehensiveFormData, label: 'Check Clock In' },
+    { key: 'kfcWelcomeAgenda' as keyof ComprehensiveFormData, label: 'KFC Welcome Agenda' },
+    { key: 'vaultInductionAgenda' as keyof ComprehensiveFormData, label: 'Vault Induction Agenda' },
+    { key: 'storeTourAgenda' as keyof ComprehensiveFormData, label: 'Store Tour Agenda' },
+    { key: 'hrPoliciesAgenda' as keyof ComprehensiveFormData, label: 'HR Policies Agenda' }
+  ];
+
+  const inductionVaultItems = [
+    { key: 'welcomeToKfc' as keyof ComprehensiveFormData, label: 'Welcome to KFC' },
+    { key: 'cultureOverview' as keyof ComprehensiveFormData, label: 'Culture Overview' },
+    { key: 'behindTheBucket' as keyof ComprehensiveFormData, label: 'Behind The Bucket' },
+    { key: 'seriousStuff' as keyof ComprehensiveFormData, label: 'Serious Stuff' },
+    { key: 'answerQuestions' as keyof ComprehensiveFormData, label: 'Answer Questions' }
+  ];
+
+  const complianceVaultItems = [
+    { key: 'fireSafety' as keyof ComprehensiveFormData, label: 'Fire Safety' },
+    { key: 'healthSafety' as keyof ComprehensiveFormData, label: 'Health & Safety' },
+    { key: 'harassmentPolicies' as keyof ComprehensiveFormData, label: 'Harassment Policies' },
+    { key: 'foodSafety' as keyof ComprehensiveFormData, label: 'Food Safety' },
+    { key: 'checkInProcedures' as keyof ComprehensiveFormData, label: 'Check-In Procedures' },
+    { key: 'ensureBreaks' as keyof ComprehensiveFormData, label: 'Ensure Breaks' }
+  ];
+
+  const tourItems = [
+    { key: 'introduceToCrew' as keyof ComprehensiveFormData, label: 'Introduce to Crew' },
+    { key: 'showRestaurant' as keyof ComprehensiveFormData, label: 'Show Restaurant' },
+    { key: 'explainFireSafety' as keyof ComprehensiveFormData, label: 'Explain Fire Safety' },
+    { key: 'showWelfareArea' as keyof ComprehensiveFormData, label: 'Show Welfare Area' }
+  ];
+
+  const hrPoliciesItems = [
+    { key: 'reviewWorkPlanner' as keyof ComprehensiveFormData, label: 'Review Work Planner' },
+    { key: 'checkPreplannedTimeOff' as keyof ComprehensiveFormData, label: 'Check Pre-planned Time Off' },
+    { key: 'explainSicknessPolicy' as keyof ComprehensiveFormData, label: 'Explain Sickness Policy' }
+  ];
+
+  const dayTwoItems = [
+    { key: 'meetBuddy' as keyof ComprehensiveFormData, label: 'Meet Buddy' },
+    { key: 'guidedPractice' as keyof ComprehensiveFormData, label: 'Guided Practice' },
+    { key: 'assessReadiness' as keyof ComprehensiveFormData, label: 'Assess Readiness' }
+  ];
+
+  const day4To30Items = [
+    { key: 'workingUnaided' as keyof ComprehensiveFormData, label: 'Working Unaided' },
+    { key: 'feedbackSessions' as keyof ComprehensiveFormData, label: 'Feedback Sessions' },
+    { key: 'vaultModulesCompleted' as keyof ComprehensiveFormData, label: 'Vault Modules Completed' }
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-50">
@@ -304,446 +180,91 @@ const ComprehensiveOnboarding = () => {
               </Card>
 
               {/* Pre-Flight Checks */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-xl text-red-600">✈️ Once the Ink is Dry: Pre-Flight Checks!</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="flex items-center space-x-2">
-                    <input
-                      type="checkbox"
-                      id="trainingPlan"
-                      checked={formData.trainingPlanCreated}
-                      onChange={(e) => handleInputChange('trainingPlanCreated', e.target.checked)}
-                      className="w-4 h-4"
-                    />
-                    <label htmlFor="trainingPlan" className="font-medium">
-                      Cook Up a Cracking Training Plan for their specific station!
-                    </label>
-                  </div>
+              <PreFlightChecks
+                formData={formData}
+                onInputChange={handleInputChange}
+              />
 
-                  <div className="flex items-center space-x-2">
-                    <input
-                      type="checkbox"
-                      id="rgmWelcome"
-                      checked={formData.rgmWelcomeScheduled}
-                      onChange={(e) => handleInputChange('rgmWelcomeScheduled', e.target.checked)}
-                      className="w-4 h-4"
-                    />
-                    <label htmlFor="rgmWelcome" className="font-medium">
-                      The RGM or ARGM should be in store to welcome them on their first shift – it's a big deal!
-                    </label>
-                  </div>
+              {/* All other sections using CheckboxSection */}
+              <CheckboxSection
+                title="Day Before"
+                emoji="📞"
+                items={dayBeforeItems}
+                formData={formData}
+                onInputChange={handleInputChange}
+                completionDateField="dayBeforeCompletionDate"
+                signatureField="dayBeforeSignature"
+              />
 
-                  <div className="space-y-2">
-                    <label className="font-medium">Pair 'Em Up! Assign a friendly Station Buddy:</label>
-                    <Input
-                      value={formData.stationBuddyAssigned}
-                      onChange={(e) => handleInputChange('stationBuddyAssigned', e.target.value)}
-                      placeholder="Station Buddy Name"
-                    />
-                  </div>
+              <CheckboxSection
+                title="First Shift"
+                emoji="👋"
+                items={firstShiftItems}
+                formData={formData}
+                onInputChange={handleInputChange}
+                completionDateField="firstShiftCompletionDate"
+                signatureField="firstShiftSignature"
+              />
 
-                  <div className="flex items-center space-x-2">
-                    <input
-                      type="checkbox"
-                      id="feedbackScheduled"
-                      checked={formData.feedbackScheduled}
-                      onChange={(e) => handleInputChange('feedbackScheduled', e.target.checked)}
-                      className="w-4 h-4"
-                    />
-                    <label htmlFor="feedbackScheduled" className="font-medium">
-                      Let's Talk Chicken! Schedule regular feedback chats and an 'End of Probation' review.
-                    </label>
-                  </div>
+              <CheckboxSection
+                title="Induction Vault"
+                emoji="📚"
+                items={inductionVaultItems}
+                formData={formData}
+                onInputChange={handleInputChange}
+                completionDateField="inductionVaultCompletionDate"
+                signatureField="inductionVaultSignature"
+              />
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t">
-                    <div>
-                      <label className="block text-sm font-medium mb-1">Completion Date:</label>
-                      <Input
-                        type="date"
-                        value={formData.preFlightCompletionDate}
-                        onChange={(e) => handleInputChange('preFlightCompletionDate', e.target.value)}
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-1">Signature of ARGM/RGM:</label>
-                      <Input
-                        value={formData.preFlightSignature}
-                        onChange={(e) => handleInputChange('preFlightSignature', e.target.value)}
-                        placeholder="Sign here"
-                      />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+              <CheckboxSection
+                title="Compliance Vault"
+                emoji="🛡️"
+                items={complianceVaultItems}
+                formData={formData}
+                onInputChange={handleInputChange}
+                completionDateField="complianceVaultCompletionDate"
+                signatureField="complianceVaultSignature"
+              />
 
-              {/* Day Before Section */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-xl text-red-600">📞 Day Before</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {[
-                    { key: 'welcomeCallConfirmExcitement', label: 'Welcome Call - Confirm Excitement' },
-                    { key: 'welcomeCallConfirmShifts', label: 'Welcome Call - Confirm Shifts' },
-                    { key: 'welcomeCallExplainFirstDay', label: 'Welcome Call - Explain First Day' },
-                    { key: 'informCrew', label: 'Inform Crew' },
-                    { key: 'checkUniform', label: 'Check Uniform' }
-                  ].map(({ key, label }) => (
-                    <div key={key} className="flex items-center space-x-2">
-                      <input
-                        type="checkbox"
-                        id={key}
-                        checked={formData[key as keyof ComprehensiveFormData] as boolean}
-                        onChange={(e) => handleInputChange(key as keyof ComprehensiveFormData, e.target.checked)}
-                        className="w-4 h-4"
-                      />
-                      <label htmlFor={key} className="font-medium">{label}</label>
-                    </div>
-                  ))}
+              <CheckboxSection
+                title="Tour"
+                emoji="🚶‍♂️"
+                items={tourItems}
+                formData={formData}
+                onInputChange={handleInputChange}
+                completionDateField="tourCompletionDate"
+                signatureField="tourSignature"
+              />
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t">
-                    <div>
-                      <label className="block text-sm font-medium mb-1">Completion Date:</label>
-                      <Input
-                        type="date"
-                        value={formData.dayBeforeCompletionDate}
-                        onChange={(e) => handleInputChange('dayBeforeCompletionDate', e.target.value)}
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-1">Signature:</label>
-                      <Input
-                        value={formData.dayBeforeSignature}
-                        onChange={(e) => handleInputChange('dayBeforeSignature', e.target.value)}
-                        placeholder="Sign here"
-                      />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+              <CheckboxSection
+                title="HR Policies"
+                emoji="📜"
+                items={hrPoliciesItems}
+                formData={formData}
+                onInputChange={handleInputChange}
+                completionDateField="hrPoliciesCompletionDate"
+                signatureField="hrPoliciesSignature"
+              />
 
-              {/* First Shift Section */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-xl text-red-600">👋 First Shift</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {[
-                    { key: 'managerOnboarding', label: 'Manager Onboarding' },
-                    { key: 'warmWelcome', label: 'Warm Welcome' },
-                    { key: 'prepareLocker', label: 'Prepare Locker' },
-                    { key: 'welcomeTable', label: 'Welcome Table' },
-                    { key: 'checkVaultId', label: 'Check Vault ID' },
-                    { key: 'checkClockIn', label: 'Check Clock In' },
-                    { key: 'kfcWelcomeAgenda', label: 'KFC Welcome Agenda' },
-                    { key: 'vaultInductionAgenda', label: 'Vault Induction Agenda' },
-                    { key: 'storeTourAgenda', label: 'Store Tour Agenda' },
-                    { key: 'hrPoliciesAgenda', label: 'HR Policies Agenda' }
-                  ].map(({ key, label }) => (
-                    <div key={key} className="flex items-center space-x-2">
-                      <input
-                        type="checkbox"
-                        id={key}
-                        checked={formData[key as keyof ComprehensiveFormData] as boolean}
-                        onChange={(e) => handleInputChange(key as keyof ComprehensiveFormData, e.target.checked)}
-                        className="w-4 h-4"
-                      />
-                      <label htmlFor={key} className="font-medium">{label}</label>
-                    </div>
-                  ))}
+              <CheckboxSection
+                title="Day Two"
+                emoji="📅"
+                items={dayTwoItems}
+                formData={formData}
+                onInputChange={handleInputChange}
+                completionDateField="dayTwoCompletionDate"
+                signatureField="dayTwoSignature"
+              />
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t">
-                    <div>
-                      <label className="block text-sm font-medium mb-1">Completion Date:</label>
-                      <Input
-                        type="date"
-                        value={formData.firstShiftCompletionDate}
-                        onChange={(e) => handleInputChange('firstShiftCompletionDate', e.target.value)}
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-1">Signature:</label>
-                      <Input
-                        value={formData.firstShiftSignature}
-                        onChange={(e) => handleInputChange('firstShiftSignature', e.target.value)}
-                        placeholder="Sign here"
-                      />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Induction Vault Section */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-xl text-red-600">📚 Induction Vault</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {[
-                    { key: 'welcomeToKfc', label: 'Welcome to KFC' },
-                    { key: 'cultureOverview', label: 'Culture Overview' },
-                    { key: 'behindTheBucket', label: 'Behind The Bucket' },
-                    { key: 'seriousStuff', label: 'Serious Stuff' },
-                    { key: 'answerQuestions', label: 'Answer Questions' }
-                  ].map(({ key, label }) => (
-                    <div key={key} className="flex items-center space-x-2">
-                      <input
-                        type="checkbox"
-                        id={key}
-                        checked={formData[key as keyof ComprehensiveFormData] as boolean}
-                        onChange={(e) => handleInputChange(key as keyof ComprehensiveFormData, e.target.checked)}
-                        className="w-4 h-4"
-                      />
-                      <label htmlFor={key} className="font-medium">{label}</label>
-                    </div>
-                  ))}
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t">
-                    <div>
-                      <label className="block text-sm font-medium mb-1">Completion Date:</label>
-                      <Input
-                        type="date"
-                        value={formData.inductionVaultCompletionDate}
-                        onChange={(e) => handleInputChange('inductionVaultCompletionDate', e.target.value)}
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-1">Signature:</label>
-                      <Input
-                        value={formData.inductionVaultSignature}
-                        onChange={(e) => handleInputChange('inductionVaultSignature', e.target.value)}
-                        placeholder="Sign here"
-                      />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Compliance Vault Section */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-xl text-red-600">🛡️ Compliance Vault</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {[
-                    { key: 'fireSafety', label: 'Fire Safety' },
-                    { key: 'healthSafety', label: 'Health & Safety' },
-                    { key: 'harassmentPolicies', label: 'Harassment Policies' },
-                    { key: 'foodSafety', label: 'Food Safety' },
-                    { key: 'checkInProcedures', label: 'Check-In Procedures' },
-                    { key: 'ensureBreaks', label: 'Ensure Breaks' }
-                  ].map(({ key, label }) => (
-                    <div key={key} className="flex items-center space-x-2">
-                      <input
-                        type="checkbox"
-                        id={key}
-                        checked={formData[key as keyof ComprehensiveFormData] as boolean}
-                        onChange={(e) => handleInputChange(key as keyof ComprehensiveFormData, e.target.checked)}
-                        className="w-4 h-4"
-                      />
-                      <label htmlFor={key} className="font-medium">{label}</label>
-                    </div>
-                  ))}
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t">
-                    <div>
-                      <label className="block text-sm font-medium mb-1">Completion Date:</label>
-                      <Input
-                        type="date"
-                        value={formData.complianceVaultCompletionDate}
-                        onChange={(e) => handleInputChange('complianceVaultCompletionDate', e.target.value)}
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-1">Signature:</label>
-                      <Input
-                        value={formData.complianceVaultSignature}
-                        onChange={(e) => handleInputChange('complianceVaultSignature', e.target.value)}
-                        placeholder="Sign here"
-                      />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Tour Section */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-xl text-red-600">🚶‍♂️ Tour</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {[
-                    { key: 'introduceToCrew', label: 'Introduce to Crew' },
-                    { key: 'showRestaurant', label: 'Show Restaurant' },
-                    { key: 'explainFireSafety', label: 'Explain Fire Safety' },
-                    { key: 'showWelfareArea', label: 'Show Welfare Area' }
-                  ].map(({ key, label }) => (
-                    <div key={key} className="flex items-center space-x-2">
-                      <input
-                        type="checkbox"
-                        id={key}
-                        checked={formData[key as keyof ComprehensiveFormData] as boolean}
-                        onChange={(e) => handleInputChange(key as keyof ComprehensiveFormData, e.target.checked)}
-                        className="w-4 h-4"
-                      />
-                      <label htmlFor={key} className="font-medium">{label}</label>
-                    </div>
-                  ))}
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t">
-                    <div>
-                      <label className="block text-sm font-medium mb-1">Completion Date:</label>
-                      <Input
-                        type="date"
-                        value={formData.tourCompletionDate}
-                        onChange={(e) => handleInputChange('tourCompletionDate', e.target.value)}
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-1">Signature:</label>
-                      <Input
-                        value={formData.tourSignature}
-                        onChange={(e) => handleInputChange('tourSignature', e.target.value)}
-                        placeholder="Sign here"
-                      />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* HR Policies Section */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-xl text-red-600">📜 HR Policies</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {[
-                    { key: 'reviewWorkPlanner', label: 'Review Work Planner' },
-                    { key: 'checkPreplannedTimeOff', label: 'Check Pre-planned Time Off' },
-                    { key: 'explainSicknessPolicy', label: 'Explain Sickness Policy' }
-                  ].map(({ key, label }) => (
-                    <div key={key} className="flex items-center space-x-2">
-                      <input
-                        type="checkbox"
-                        id={key}
-                        checked={formData[key as keyof ComprehensiveFormData] as boolean}
-                        onChange={(e) => handleInputChange(key as keyof ComprehensiveFormData, e.target.checked)}
-                        className="w-4 h-4"
-                      />
-                      <label htmlFor={key} className="font-medium">{label}</label>
-                    </div>
-                  ))}
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t">
-                    <div>
-                      <label className="block text-sm font-medium mb-1">Completion Date:</label>
-                      <Input
-                        type="date"
-                        value={formData.hrPoliciesCompletionDate}
-                        onChange={(e) => handleInputChange('hrPoliciesCompletionDate', e.target.value)}
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-1">Signature:</label>
-                      <Input
-                        value={formData.hrPoliciesSignature}
-                        onChange={(e) => handleInputChange('hrPoliciesSignature', e.target.value)}
-                        placeholder="Sign here"
-                      />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Day Two Section */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-xl text-red-600">📅 Day Two</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {[
-                    { key: 'meetBuddy', label: 'Meet Buddy' },
-                    { key: 'guidedPractice', label: 'Guided Practice' },
-                    { key: 'assessReadiness', label: 'Assess Readiness' }
-                  ].map(({ key, label }) => (
-                    <div key={key} className="flex items-center space-x-2">
-                      <input
-                        type="checkbox"
-                        id={key}
-                        checked={formData[key as keyof ComprehensiveFormData] as boolean}
-                        onChange={(e) => handleInputChange(key as keyof ComprehensiveFormData, e.target.checked)}
-                        className="w-4 h-4"
-                      />
-                      <label htmlFor={key} className="font-medium">{label}</label>
-                    </div>
-                  ))}
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t">
-                    <div>
-                      <label className="block text-sm font-medium mb-1">Completion Date:</label>
-                      <Input
-                        type="date"
-                        value={formData.dayTwoCompletionDate}
-                        onChange={(e) => handleInputChange('dayTwoCompletionDate', e.target.value)}
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-1">Signature:</label>
-                      <Input
-                        value={formData.dayTwoSignature}
-                        onChange={(e) => handleInputChange('dayTwoSignature', e.target.value)}
-                        placeholder="Sign here"
-                      />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Day 4 to 30 Section */}
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-xl text-red-600">🗓️ Day 4 to 30</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  {[
-                    { key: 'workingUnaided', label: 'Working Unaided' },
-                    { key: 'feedbackSessions', label: 'Feedback Sessions' },
-                    { key: 'vaultModulesCompleted', label: 'Vault Modules Completed' }
-                  ].map(({ key, label }) => (
-                    <div key={key} className="flex items-center space-x-2">
-                      <input
-                        type="checkbox"
-                        id={key}
-                        checked={formData[key as keyof ComprehensiveFormData] as boolean}
-                        onChange={(e) => handleInputChange(key as keyof ComprehensiveFormData, e.target.checked)}
-                        className="w-4 h-4"
-                      />
-                      <label htmlFor={key} className="font-medium">{label}</label>
-                    </div>
-                  ))}
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t">
-                    <div>
-                      <label className="block text-sm font-medium mb-1">Completion Date:</label>
-                      <Input
-                        type="date"
-                        value={formData.day4To30CompletionDate}
-                        onChange={(e) => handleInputChange('day4To30CompletionDate', e.target.value)}
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium mb-1">Signature:</label>
-                      <Input
-                        value={formData.day4To30Signature}
-                        onChange={(e) => handleInputChange('day4To30Signature', e.target.value)}
-                        placeholder="Sign here"
-                      />
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+              <CheckboxSection
+                title="Day 4 to 30"
+                emoji="🗓️"
+                items={day4To30Items}
+                formData={formData}
+                onInputChange={handleInputChange}
+                completionDateField="day4To30CompletionDate"
+                signatureField="day4To30Signature"
+              />
 
               {/* Final Sign Off Section */}
               <Card>
