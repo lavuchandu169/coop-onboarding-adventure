@@ -34,24 +34,25 @@ const OnboardingForm = ({
   onSaveForm
 }: OnboardingFormProps) => {
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="text-xl">Employee Onboarding Form</CardTitle>
+    <Card className="w-full">
+      <CardHeader className="px-4 sm:px-6">
+        <CardTitle className="text-lg sm:text-xl">Employee Onboarding Form</CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+      <CardContent className="space-y-4 px-4 sm:px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700">
               Full Name
             </label>
             <Input
               value={formData.fullName}
               onChange={(e) => onInputChange('fullName', e.target.value)}
               placeholder="Enter full name"
+              className="w-full"
             />
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700">
               Email
             </label>
             <Input
@@ -59,51 +60,56 @@ const OnboardingForm = ({
               value={formData.email}
               onChange={(e) => onInputChange('email', e.target.value)}
               placeholder="Enter email"
+              className="w-full"
             />
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700">
               Phone
             </label>
             <Input
               value={formData.phone}
               onChange={(e) => onInputChange('phone', e.target.value)}
               placeholder="Enter phone number"
+              className="w-full"
             />
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700">
               Position
             </label>
             <Input
               value={formData.position}
               onChange={(e) => onInputChange('position', e.target.value)}
               placeholder="Enter position"
+              className="w-full"
             />
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700">
               Department
             </label>
             <Input
               value={formData.department}
               onChange={(e) => onInputChange('department', e.target.value)}
               placeholder="Enter department"
+              className="w-full"
             />
           </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700">
               Start Date
             </label>
             <Input
               type="date"
               value={formData.startDate}
               onChange={(e) => onInputChange('startDate', e.target.value)}
+              className="w-full"
             />
           </div>
         </div>
 
-        <div className="flex gap-4 pt-4">
+        <div className="flex flex-col sm:flex-row gap-3 pt-4">
           <SaveFormDialog
             open={saveDialogOpen}
             onOpenChange={setSaveDialogOpen}
@@ -112,7 +118,7 @@ const OnboardingForm = ({
             onSave={onSaveForm}
           />
 
-          <Button className="bg-red-600 hover:bg-red-700">
+          <Button className="bg-red-600 hover:bg-red-700 w-full sm:w-auto">
             Submit Application
           </Button>
         </div>
