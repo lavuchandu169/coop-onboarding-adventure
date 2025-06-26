@@ -191,7 +191,7 @@ const Index = () => {
           day_4_to_30_feedback_sessions: false,
           day_4_to_30_vault_modules_completed: false,
           day_4_to_30_completion_date: '',
-          day_4_to_30_signature: false,
+          day_4_to_30_signature: '',
           final_sign_off: false,
           final_sign_off_completion_date: '',
           final_sign_off_signature: ''
