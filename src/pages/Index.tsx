@@ -5,7 +5,9 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import OnboardingForm from "@/components/OnboardingForm";
+import SavedFormsList from "@/components/SavedFormsList";
 import Header from "@/components/Header";
+import { useSavedForms } from "@/hooks/useSavedForms";
 
 interface FormData {
   fullName: string;
@@ -20,6 +22,7 @@ const Index = () => {
   const { user, signOut, loading } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { savedForms, loading: formsLoading, saveForm, loadForm, deleteForm } = useSavedForms();
 
   const [formData, setFormData] = useState<FormData>({
     fullName: '',
@@ -54,7 +57,7 @@ const Index = () => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
-  const handleSaveForm = () => {
+  const handleSaveForm = async () => {
     if (!formName.trim()) {
       toast({
         title: "Error",
@@ -64,14 +67,24 @@ const Index = () => {
       return;
     }
 
-    // Save form logic would go here
-    toast({
-      title: "Success!",
-      description: `Form "${formName}" saved successfully!`,
-    });
-    
+    await saveForm(formName, formData);
     setSaveDialogOpen(false);
     setFormName('');
+  };
+
+  const handleLoadForm = async (formId: string) => {
+    const loadedData = await loadForm(formId);
+    if (loadedData) {
+      setFormData(loadedData);
+      toast({
+        title: "Success!",
+        description: "Form loaded successfully!",
+      });
+    }
+  };
+
+  const handleDeleteForm = async (formId: string) => {
+    await deleteForm(formId);
   };
 
   if (loading) {
@@ -91,7 +104,7 @@ const Index = () => {
       <Header userEmail={user.email || ''} onSignOut={handleSignOut} />
       
       <div className="container mx-auto py-8 px-4">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-red-600 mb-4">
               Welcome to KFC Onboarding Adventure!
@@ -101,15 +114,28 @@ const Index = () => {
             </p>
           </div>
           
-          <OnboardingForm
-            formData={formData}
-            onInputChange={handleInputChange}
-            saveDialogOpen={saveDialogOpen}
-            setSaveDialogOpen={setSaveDialogOpen}
-            formName={formName}
-            setFormName={setFormName}
-            onSaveForm={handleSaveForm}
-          />
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2">
+              <OnboardingForm
+                formData={formData}
+                onInputChange={handleInputChange}
+                saveDialogOpen={saveDialogOpen}
+                setSaveDialogOpen={setSaveDialogOpen}
+                formName={formName}
+                setFormName={setFormName}
+                onSaveForm={handleSaveForm}
+              />
+            </div>
+            
+            <div className="lg:col-span-1">
+              <SavedFormsList
+                savedForms={savedForms}
+                loading={formsLoading}
+                onLoadForm={handleLoadForm}
+                onDeleteForm={handleDeleteForm}
+              />
+            </div>
+          </div>
         </div>
       </div>
       
