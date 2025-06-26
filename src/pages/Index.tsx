@@ -61,7 +61,16 @@ const Index = () => {
   const handleLoadForm = async (formId: string) => {
     const data = await loadForm(formId);
     if (data) {
-      setFormData(data);
+      // Type assertion to ensure the data matches our form structure
+      const typedData = data as {
+        fullName: string;
+        email: string;
+        phone: string;
+        position: string;
+        department: string;
+        startDate: string;
+      };
+      setFormData(typedData);
       toast({
         title: "Success!",
         description: "Form loaded successfully!",
