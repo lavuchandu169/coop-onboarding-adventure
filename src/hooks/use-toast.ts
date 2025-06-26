@@ -1,4 +1,3 @@
-
 import * as React from "react"
 
 const TOAST_LIMIT = 1
@@ -148,9 +147,6 @@ function toast({ ...props }: Toast) {
     toast: {
       ...props,
       id,
-      onOpenChange: (open) => {
-        if (!open) dismiss()
-      },
     },
   })
 
