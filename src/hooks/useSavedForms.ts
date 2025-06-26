@@ -8,6 +8,7 @@ interface SavedForm {
   id: string;
   form_name: string;
   form_data: any;
+  form_type?: string;
   created_at: string;
   updated_at: string;
 }
@@ -42,24 +43,54 @@ export const useSavedForms = () => {
     }
   };
 
-  const saveForm = async (formName: string, formData: any) => {
+  const saveForm = async (formName: string, formData: any, formType: string = 'basic') => {
     if (!user) return;
 
     try {
-      const { error } = await supabase
+      // Check if form with same name exists
+      const { data: existingForms, error: checkError } = await supabase
         .from('saved_forms')
-        .insert({
-          user_id: user.id,
-          form_name: formName,
-          form_data: formData,
+        .select('id')
+        .eq('user_id', user.id)
+        .eq('form_name', formName);
+
+      if (checkError) throw checkError;
+
+      if (existingForms && existingForms.length > 0) {
+        // Update existing form
+        const { error: updateError } = await supabase
+          .from('saved_forms')
+          .update({
+            form_data: formData,
+            form_type: formType,
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', existingForms[0].id);
+
+        if (updateError) throw updateError;
+
+        toast({
+          title: "Success!",
+          description: "Form updated successfully!",
         });
+      } else {
+        // Insert new form
+        const { error: insertError } = await supabase
+          .from('saved_forms')
+          .insert({
+            user_id: user.id,
+            form_name: formName,
+            form_data: formData,
+            form_type: formType,
+          });
 
-      if (error) throw error;
+        if (insertError) throw insertError;
 
-      toast({
-        title: "Success!",
-        description: "Form saved successfully!",
-      });
+        toast({
+          title: "Success!",
+          description: "Form saved successfully!",
+        });
+      }
 
       fetchSavedForms();
     } catch (error) {
@@ -81,6 +112,12 @@ export const useSavedForms = () => {
         .single();
 
       if (error) throw error;
+      
+      toast({
+        title: "Success!",
+        description: "Form loaded successfully!",
+      });
+      
       return data.form_data;
     } catch (error) {
       console.error('Error loading form:', error);

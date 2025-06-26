@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import SaveFormDialog from './SaveFormDialog';
+import { useToast } from '@/hooks/use-toast';
 
 interface FormData {
   fullName: string;
@@ -33,6 +34,28 @@ const OnboardingForm = ({
   setFormName,
   onSaveForm
 }: OnboardingFormProps) => {
+  const { toast } = useToast();
+
+  const handleSubmit = () => {
+    // Validate required fields
+    const requiredFields = ['fullName', 'email', 'position', 'department', 'startDate'];
+    const missingFields = requiredFields.filter(field => !formData[field as keyof FormData]);
+    
+    if (missingFields.length > 0) {
+      toast({
+        title: "Missing Information",
+        description: "Please fill in all required fields before submitting.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    toast({
+      title: "Success!",
+      description: "Employee onboarding form submitted successfully!",
+    });
+  };
+
   return (
     <Card className="w-full">
       <CardHeader className="px-4 sm:px-6">
@@ -42,18 +65,19 @@ const OnboardingForm = ({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="space-y-2">
             <label className="block text-sm font-medium text-gray-700">
-              Full Name
+              Full Name <span className="text-red-500">*</span>
             </label>
             <Input
               value={formData.fullName}
               onChange={(e) => onInputChange('fullName', e.target.value)}
               placeholder="Enter full name"
               className="w-full"
+              required
             />
           </div>
           <div className="space-y-2">
             <label className="block text-sm font-medium text-gray-700">
-              Email
+              Email <span className="text-red-500">*</span>
             </label>
             <Input
               type="email"
@@ -61,6 +85,7 @@ const OnboardingForm = ({
               onChange={(e) => onInputChange('email', e.target.value)}
               placeholder="Enter email"
               className="w-full"
+              required
             />
           </div>
           <div className="space-y-2">
@@ -76,35 +101,38 @@ const OnboardingForm = ({
           </div>
           <div className="space-y-2">
             <label className="block text-sm font-medium text-gray-700">
-              Position
+              Position <span className="text-red-500">*</span>
             </label>
             <Input
               value={formData.position}
               onChange={(e) => onInputChange('position', e.target.value)}
               placeholder="Enter position"
               className="w-full"
+              required
             />
           </div>
           <div className="space-y-2">
             <label className="block text-sm font-medium text-gray-700">
-              Department
+              Department <span className="text-red-500">*</span>
             </label>
             <Input
               value={formData.department}
               onChange={(e) => onInputChange('department', e.target.value)}
               placeholder="Enter department"
               className="w-full"
+              required
             />
           </div>
           <div className="space-y-2">
             <label className="block text-sm font-medium text-gray-700">
-              Start Date
+              Start Date <span className="text-red-500">*</span>
             </label>
             <Input
               type="date"
               value={formData.startDate}
               onChange={(e) => onInputChange('startDate', e.target.value)}
               className="w-full"
+              required
             />
           </div>
         </div>
@@ -118,7 +146,10 @@ const OnboardingForm = ({
             onSave={onSaveForm}
           />
 
-          <Button className="bg-red-600 hover:bg-red-700 w-full sm:w-auto">
+          <Button 
+            onClick={handleSubmit}
+            className="bg-red-600 hover:bg-red-700 w-full sm:w-auto"
+          >
             Submit Application
           </Button>
         </div>
