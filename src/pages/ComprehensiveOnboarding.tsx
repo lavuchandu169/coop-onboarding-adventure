@@ -43,7 +43,6 @@ const ComprehensiveOnboarding = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
     console.log('Form submitted:', formData);
   };
 
@@ -232,6 +231,510 @@ const ComprehensiveOnboarding = () => {
                         value={formData.day_before_signature}
                         onChange={(e) => handleInputChange('day_before_signature', e.target.value)}
                         placeholder="Sign here"
+                        className="w-full"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* First Shift Section */}
+          <Card className="border-l-4 border-l-red-600">
+            <CardHeader className="p-4 sm:p-6">
+              <CardTitle className="text-lg sm:text-xl text-red-600">
+                The Big Day: First Shift Magic!
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-4 sm:p-6 pt-0">
+              <div className="space-y-4">
+                <label className="flex items-start gap-3 text-sm sm:text-base">
+                  <input 
+                    type="checkbox" 
+                    className="mt-1 w-4 h-4 sm:w-5 sm:h-5 accent-red-600 flex-shrink-0" 
+                  />
+                  <span>Red Carpet Welcome! The RGM or ARGM greets them personally - make it memorable!</span>
+                </label>
+                
+                <label className="flex items-start gap-3 text-sm sm:text-base">
+                  <input 
+                    type="checkbox" 
+                    className="mt-1 w-4 h-4 sm:w-5 sm:h-5 accent-red-600 flex-shrink-0" 
+                  />
+                  <span>Meet & Greet Extravaganza! Introduce them to the fantastic crew they'll be working with.</span>
+                </label>
+                
+                <label className="flex items-start gap-3 text-sm sm:text-base">
+                  <input 
+                    type="checkbox" 
+                    className="mt-1 w-4 h-4 sm:w-5 sm:h-5 accent-red-600 flex-shrink-0" 
+                  />
+                  <span>Buddy System Activated! Connect them with their assigned Station Buddy for the shift.</span>
+                </label>
+
+                <label className="flex items-start gap-3 text-sm sm:text-base">
+                  <input 
+                    type="checkbox" 
+                    className="mt-1 w-4 h-4 sm:w-5 sm:h-5 accent-red-600 flex-shrink-0" 
+                  />
+                  <span>The Grand Tour! Show them around their new kingdom - from break room to customer area.</span>
+                </label>
+
+                <div className="border-t border-dashed border-gray-300 pt-4 mt-6 space-y-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Completion Date:
+                      </label>
+                      <Input
+                        type="date"
+                        value={formData.first_shift_completion_date}
+                        onChange={(e) => handleInputChange('first_shift_completion_date', e.target.value)}
+                        className="w-full"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Signature of ARGM/RGM:
+                      </label>
+                      <Input
+                        value={formData.first_shift_signature}
+                        onChange={(e) => handleInputChange('first_shift_signature', e.target.value)}
+                        placeholder="Sign here"
+                        className="w-full"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Induction Vault Section */}
+          <Card className="border-l-4 border-l-red-600">
+            <CardHeader className="p-4 sm:p-6">
+              <CardTitle className="text-lg sm:text-xl text-red-600">
+                Knowledge Vault: Induction Learning!
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-4 sm:p-6 pt-0">
+              <div className="space-y-4">
+                <label className="flex items-start gap-3 text-sm sm:text-base">
+                  <input 
+                    type="checkbox" 
+                    className="mt-1 w-4 h-4 sm:w-5 sm:h-5 accent-red-600 flex-shrink-0" 
+                  />
+                  <span>Digital Learning Journey! Complete the Induction Vault training modules online.</span>
+                </label>
+                
+                <label className="flex items-start gap-3 text-sm sm:text-base">
+                  <input 
+                    type="checkbox" 
+                    className="mt-1 w-4 h-4 sm:w-5 sm:h-5 accent-red-600 flex-shrink-0" 
+                  />
+                  <span>Knowledge Check! Ensure all mandatory modules are completed and passed.</span>
+                </label>
+
+                <div className="border-t border-dashed border-gray-300 pt-4 mt-6 space-y-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Completion Date:
+                      </label>
+                      <Input
+                        type="date"
+                        value={formData.induction_vault_completion_date}
+                        onChange={(e) => handleInputChange('induction_vault_completion_date', e.target.value)}
+                        className="w-full"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Signature of Team Member:
+                      </label>
+                      <Input
+                        value={formData.induction_vault_signature}
+                        onChange={(e) => handleInputChange('induction_vault_signature', e.target.value)}
+                        placeholder="Sign here"
+                        className="w-full"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Compliance Vault Section */}
+          <Card className="border-l-4 border-l-red-600">
+            <CardHeader className="p-4 sm:p-6">
+              <CardTitle className="text-lg sm:text-xl text-red-600">
+                Safety First: Compliance Vault!
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-4 sm:p-6 pt-0">
+              <div className="space-y-4">
+                <label className="flex items-start gap-3 text-sm sm:text-base">
+                  <input 
+                    type="checkbox" 
+                    className="mt-1 w-4 h-4 sm:w-5 sm:h-5 accent-red-600 flex-shrink-0" 
+                  />
+                  <span>Safety Champions! Complete all mandatory compliance and safety training modules.</span>
+                </label>
+                
+                <label className="flex items-start gap-3 text-sm sm:text-base">
+                  <input 
+                    type="checkbox" 
+                    className="mt-1 w-4 h-4 sm:w-5 sm:h-5 accent-red-600 flex-shrink-0" 
+                  />
+                  <span>Certification Success! Achieve passing scores on all compliance assessments.</span>
+                </label>
+
+                <div className="border-t border-dashed border-gray-300 pt-4 mt-6 space-y-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Completion Date:
+                      </label>
+                      <Input
+                        type="date"
+                        value={formData.compliance_vault_completion_date}
+                        onChange={(e) => handleInputChange('compliance_vault_completion_date', e.target.value)}
+                        className="w-full"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Signature of Team Member:
+                      </label>
+                      <Input
+                        value={formData.compliance_vault_signature}
+                        onChange={(e) => handleInputChange('compliance_vault_signature', e.target.value)}
+                        placeholder="Sign here"
+                        className="w-full"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Store Tour Section */}
+          <Card className="border-l-4 border-l-red-600">
+            <CardHeader className="p-4 sm:p-6">
+              <CardTitle className="text-lg sm:text-xl text-red-600">
+                Behind the Scenes: Complete Store Tour!
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-4 sm:p-6 pt-0">
+              <div className="space-y-4">
+                <label className="flex items-start gap-3 text-sm sm:text-base">
+                  <input 
+                    type="checkbox" 
+                    className="mt-1 w-4 h-4 sm:w-5 sm:h-5 accent-red-600 flex-shrink-0" 
+                  />
+                  <span>VIP Access! Complete tour of all areas including kitchen, storage, and customer areas.</span>
+                </label>
+                
+                <label className="flex items-start gap-3 text-sm sm:text-base">
+                  <input 
+                    type="checkbox" 
+                    className="mt-1 w-4 h-4 sm:w-5 sm:h-5 accent-red-600 flex-shrink-0" 
+                  />
+                  <span>Safety Spotlight! Understand all emergency procedures, exits, and safety protocols.</span>
+                </label>
+
+                <label className="flex items-start gap-3 text-sm sm:text-base">
+                  <input 
+                    type="checkbox" 
+                    className="mt-1 w-4 h-4 sm:w-5 sm:h-5 accent-red-600 flex-shrink-0" 
+                  />
+                  <span>Equipment Expertise! Familiarization with all equipment they'll be using.</span>
+                </label>
+
+                <div className="border-t border-dashed border-gray-300 pt-4 mt-6 space-y-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Completion Date:
+                      </label>
+                      <Input
+                        type="date"
+                        value={formData.tour_completion_date}
+                        onChange={(e) => handleInputChange('tour_completion_date', e.target.value)}
+                        className="w-full"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Signature of Tour Guide:
+                      </label>
+                      <Input
+                        value={formData.tour_signature}
+                        onChange={(e) => handleInputChange('tour_signature', e.target.value)}
+                        placeholder="Sign here"
+                        className="w-full"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* HR Documentation Section */}
+          <Card className="border-l-4 border-l-red-600">
+            <CardHeader className="p-4 sm:p-6">
+              <CardTitle className="text-lg sm:text-xl text-red-600">
+                Paperwork Paradise: HR Documentation!
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-4 sm:p-6 pt-0">
+              <div className="space-y-4">
+                <label className="flex items-start gap-3 text-sm sm:text-base">
+                  <input 
+                    type="checkbox" 
+                    className="mt-1 w-4 h-4 sm:w-5 sm:h-5 accent-red-600 flex-shrink-0" 
+                  />
+                  <span>Documentation Complete! All HR forms completed and filed correctly.</span>
+                </label>
+                
+                <label className="flex items-start gap-3 text-sm sm:text-base">
+                  <input 
+                    type="checkbox" 
+                    className="mt-1 w-4 h-4 sm:w-5 sm:h-5 accent-red-600 flex-shrink-0" 
+                  />
+                  <span>Benefits Briefing! Explanation of all employee benefits and entitlements.</span>
+                </label>
+
+                <label className="flex items-start gap-3 text-sm sm:text-base">
+                  <input 
+                    type="checkbox" 
+                    className="mt-1 w-4 h-4 sm:w-5 sm:h-5 accent-red-600 flex-shrink-0" 
+                  />
+                  <span>Policy Review! Understanding of all company policies and procedures.</span>
+                </label>
+
+                <div className="border-t border-dashed border-gray-300 pt-4 mt-6 space-y-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Completion Date:
+                      </label>
+                      <Input
+                        type="date"
+                        value={formData.hr_completion_date}
+                        onChange={(e) => handleInputChange('hr_completion_date', e.target.value)}
+                        className="w-full"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Signature of HR Representative:
+                      </label>
+                      <Input
+                        value={formData.hr_signature}
+                        onChange={(e) => handleInputChange('hr_signature', e.target.value)}
+                        placeholder="Sign here"
+                        className="w-full"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Day Two Check-in Section */}
+          <Card className="border-l-4 border-l-red-600">
+            <CardHeader className="p-4 sm:p-6">
+              <CardTitle className="text-lg sm:text-xl text-red-600">
+                Day Two Delight: How's It Going?
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-4 sm:p-6 pt-0">
+              <div className="space-y-4">
+                <label className="flex items-start gap-3 text-sm sm:text-base">
+                  <input 
+                    type="checkbox" 
+                    className="mt-1 w-4 h-4 sm:w-5 sm:h-5 accent-red-600 flex-shrink-0" 
+                  />
+                  <span>Check-in Chat! How was their first day? Any questions or concerns?</span>
+                </label>
+                
+                <label className="flex items-start gap-3 text-sm sm:text-base">
+                  <input 
+                    type="checkbox" 
+                    className="mt-1 w-4 h-4 sm:w-5 sm:h-5 accent-red-600 flex-shrink-0" 
+                  />
+                  <span>Feedback Loop! Address any immediate issues and provide encouragement.</span>
+                </label>
+
+                <label className="flex items-start gap-3 text-sm sm:text-base">
+                  <input 
+                    type="checkbox" 
+                    className="mt-1 w-4 h-4 sm:w-5 sm:h-5 accent-red-600 flex-shrink-0" 
+                  />
+                  <span>Training Progress! Review training plan and adjust if needed.</span>
+                </label>
+
+                <div className="border-t border-dashed border-gray-300 pt-4 mt-6 space-y-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Completion Date:
+                      </label>
+                      <Input
+                        type="date"
+                        value={formData.day_two_completion_date}
+                        onChange={(e) => handleInputChange('day_two_completion_date', e.target.value)}
+                        className="w-full"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Signature of ARGM/RGM:
+                      </label>
+                      <Input
+                        value={formData.day_two_signature}
+                        onChange={(e) => handleInputChange('day_two_signature', e.target.value)}
+                        placeholder="Sign here"
+                        className="w-full"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Days 4-30 Section */}
+          <Card className="border-l-4 border-l-red-600">
+            <CardHeader className="p-4 sm:p-6">
+              <CardTitle className="text-lg sm:text-xl text-red-600">
+                Building Confidence: Days 4-30 Journey!
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-4 sm:p-6 pt-0">
+              <div className="space-y-4">
+                <label className="flex items-start gap-3 text-sm sm:text-base">
+                  <input 
+                    type="checkbox" 
+                    className="mt-1 w-4 h-4 sm:w-5 sm:h-5 accent-red-600 flex-shrink-0" 
+                  />
+                  <span>Weekly Check-ins! Regular feedback sessions to monitor progress and address concerns.</span>
+                </label>
+                
+                <label className="flex items-start gap-3 text-sm sm:text-base">
+                  <input 
+                    type="checkbox" 
+                    className="mt-1 w-4 h-4 sm:w-5 sm:h-5 accent-red-600 flex-shrink-0" 
+                  />
+                  <span>Skill Building! Progressive training on all station responsibilities.</span>
+                </label>
+
+                <label className="flex items-start gap-3 text-sm sm:text-base">
+                  <input 
+                    type="checkbox" 
+                    className="mt-1 w-4 h-4 sm:w-5 sm:h-5 accent-red-600 flex-shrink-0" 
+                  />
+                  <span>Team Integration! Fully integrated into team dynamics and culture.</span>
+                </label>
+
+                <label className="flex items-start gap-3 text-sm sm:text-base">
+                  <input 
+                    type="checkbox" 
+                    className="mt-1 w-4 h-4 sm:w-5 sm:h-5 accent-red-600 flex-shrink-0" 
+                  />
+                  <span>Performance Review! Mid-probation assessment and feedback session.</span>
+                </label>
+
+                <div className="border-t border-dashed border-gray-300 pt-4 mt-6 space-y-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Completion Date:
+                      </label>
+                      <Input
+                        type="date"
+                        value={formData.day_4_to_30_completion_date}
+                        onChange={(e) => handleInputChange('day_4_to_30_completion_date', e.target.value)}
+                        className="w-full"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Signature of ARGM/RGM:
+                      </label>
+                      <Input
+                        value={formData.day_4_to_30_signature}
+                        onChange={(e) => handleInputChange('day_4_to_30_signature', e.target.value)}
+                        placeholder="Sign here"
+                        className="w-full"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Final Sign-off Section */}
+          <Card className="border-l-4 border-l-green-600">
+            <CardHeader className="p-4 sm:p-6">
+              <CardTitle className="text-lg sm:text-xl text-green-600">
+                🎉 Mission Accomplished: Final Sign-off! 🎉
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="p-4 sm:p-6 pt-0">
+              <div className="space-y-4">
+                <label className="flex items-start gap-3 text-sm sm:text-base">
+                  <input 
+                    type="checkbox" 
+                    className="mt-1 w-4 h-4 sm:w-5 sm:h-5 accent-green-600 flex-shrink-0" 
+                  />
+                  <span>🌟 Superstar Status! Team member is fully trained and confident in their role.</span>
+                </label>
+                
+                <label className="flex items-start gap-3 text-sm sm:text-base">
+                  <input 
+                    type="checkbox" 
+                    className="mt-1 w-4 h-4 sm:w-5 sm:h-5 accent-green-600 flex-shrink-0" 
+                  />
+                  <span>🏆 Final Assessment! Successful completion of probationary period review.</span>
+                </label>
+
+                <label className="flex items-start gap-3 text-sm sm:text-base">
+                  <input 
+                    type="checkbox" 
+                    className="mt-1 w-4 h-4 sm:w-5 sm:h-5 accent-green-600 flex-shrink-0" 
+                  />
+                  <span>🎊 Welcome to the Family! Official confirmation of permanent team member status.</span>
+                </label>
+
+                <div className="border-t border-dashed border-gray-300 pt-4 mt-6 space-y-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Final Completion Date:
+                      </label>
+                      <Input
+                        type="date"
+                        value={formData.final_sign_off_completion_date}
+                        onChange={(e) => handleInputChange('final_sign_off_completion_date', e.target.value)}
+                        className="w-full"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Final Signature of RGM:
+                      </label>
+                      <Input
+                        value={formData.final_sign_off_signature}
+                        onChange={(e) => handleInputChange('final_sign_off_signature', e.target.value)}
+                        placeholder="Final Sign here"
                         className="w-full"
                       />
                     </div>
