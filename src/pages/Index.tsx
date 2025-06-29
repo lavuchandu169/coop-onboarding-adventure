@@ -1,63 +1,23 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useAuth } from '@/contexts/AuthContext';
-import Header from '@/components/Header';
-import OnboardingForm from '@/components/OnboardingForm';
-import SavedFormsList from '@/components/SavedFormsList';
-import { useSavedForms } from '@/hooks/useSavedForms';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from 'react-router-dom';
 import { CheckSquare, FileText, Users, Clock, Shield, Zap, Globe, ArrowRight } from 'lucide-react';
-
-interface FormData {
-  fullName: string;
-  email: string;
-  phone: string;
-  position: string;
-  department: string;
-  startDate: string;
-}
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const Index = () => {
-  const { user, signOut } = useAuth();
-  const { savedForms, loading, saveForm, loadForm, deleteForm } = useSavedForms();
-  
-  const [formData, setFormData] = useState<FormData>({
-    fullName: '',
-    email: '',
-    phone: '',
-    position: '',
-    department: '',
-    startDate: ''
-  });
-  
-  const [saveDialogOpen, setSaveDialogOpen] = useState(false);
-  const [formName, setFormName] = useState('');
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
-  const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({
-      ...prev,
-      [field]: value
-    }));
-  };
-
-  const handleSaveForm = async () => {
-    if (formName.trim()) {
-      const success = await saveForm(formName, formData, 'basic');
-      if (success) {
-        setSaveDialogOpen(false);
-        setFormName('');
-      }
+  // Redirect authenticated users to comprehensive checklist
+  useEffect(() => {
+    if (user) {
+      navigate('/comprehensive');
     }
-  };
-
-  const handleLoadForm = async (formId: string) => {
-    const loadedData = await loadForm(formId);
-    if (loadedData) {
-      setFormData(loadedData);
-    }
-  };
+  }, [user, navigate]);
 
   // Landing page for non-authenticated users
   if (!user) {
@@ -74,8 +34,8 @@ const Index = () => {
                     <span className="block text-red-600 xl:inline">KFC Onboarding</span>
                   </h1>
                   <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-                    Streamline your employee onboarding process with our comprehensive digital platform. 
-                    From basic information collection to complete checklist management, we make onboarding simple and efficient.
+                    Streamline your employee onboarding process with our comprehensive digital checklist. 
+                    From pre-flight checks to final sign-off, we make onboarding simple and efficient.
                   </p>
                   <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
                     <div className="rounded-md shadow">
@@ -101,8 +61,8 @@ const Index = () => {
           <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
             <div className="h-56 w-full bg-gradient-to-r from-red-600 to-red-800 sm:h-72 md:h-96 lg:w-full lg:h-full flex items-center justify-center">
               <div className="text-center text-white">
-                <FileText className="h-24 w-24 mx-auto mb-4 opacity-80" />
-                <p className="text-xl font-semibold">Digital Onboarding Platform</p>
+                <CheckSquare className="h-24 w-24 mx-auto mb-4 opacity-80" />
+                <p className="text-xl font-semibold">Comprehensive Onboarding Checklist</p>
               </div>
             </div>
           </div>
@@ -164,32 +124,31 @@ const Index = () => {
             <div className="lg:text-center">
               <h2 className="text-base text-red-600 font-semibold tracking-wide uppercase">Platform Features</h2>
               <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                Streamlined Onboarding Process
+                Comprehensive Onboarding Process
               </p>
               <p className="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
-                Our digital platform makes employee onboarding efficient, comprehensive, and user-friendly.
+                Our digital checklist covers every aspect of employee onboarding from day one to final sign-off.
               </p>
             </div>
 
             <div className="mt-16">
-              <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
+              <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
                 <Card className="hover:shadow-lg transition-shadow">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
-                      <FileText className="h-5 w-5 text-blue-600" />
-                      Basic Onboarding Form
+                      <CheckSquare className="h-5 w-5 text-green-600" />
+                      Pre-Flight Checks
                     </CardTitle>
                     <CardDescription>
-                      Quick and simple form to collect essential employee information
+                      Essential preparation before the first day
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <ul className="text-sm text-gray-600 space-y-2">
-                      <li>• Personal Information Collection</li>
-                      <li>• Contact Details Management</li>
-                      <li>• Position & Department Assignment</li>
-                      <li>• Start Date Scheduling</li>
-                      <li>• Form Save & Load Functionality</li>
+                      <li>• Training Plan Creation</li>
+                      <li>• RGM Welcome Scheduling</li>
+                      <li>• Station Buddy Assignment</li>
+                      <li>• Feedback Session Planning</li>
                     </ul>
                   </CardContent>
                 </Card>
@@ -197,20 +156,39 @@ const Index = () => {
                 <Card className="hover:shadow-lg transition-shadow">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
-                      <CheckSquare className="h-5 w-5 text-green-600" />
-                      Comprehensive Checklist
+                      <Users className="h-5 w-5 text-blue-600" />
+                      First Day Experience
                     </CardTitle>
                     <CardDescription>
-                      Complete onboarding checklist with all necessary steps
+                      Warm welcome and essential introductions
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
                     <ul className="text-sm text-gray-600 space-y-2">
-                      <li>• Documentation Requirements</li>
-                      <li>• Training Module Tracking</li>
-                      <li>• Equipment Assignment</li>
-                      <li>• Policy Acknowledgments</li>
-                      <li>• Progress Monitoring</li>
+                      <li>• Manager Onboarding</li>
+                      <li>• Welcome Table Setup</li>
+                      <li>• Store Tour</li>
+                      <li>• HR Policies Review</li>
+                    </ul>
+                  </CardContent>
+                </Card>
+
+                <Card className="hover:shadow-lg transition-shadow">
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Clock className="h-5 w-5 text-purple-600" />
+                      Ongoing Development
+                    </CardTitle>
+                    <CardDescription>
+                      30-day journey to full integration
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="text-sm text-gray-600 space-y-2">
+                      <li>• Buddy System Support</li>
+                      <li>• Regular Feedback Sessions</li>
+                      <li>• Vault Module Completion</li>
+                      <li>• Final Sign-off Process</li>
                     </ul>
                   </CardContent>
                 </Card>
@@ -227,7 +205,7 @@ const Index = () => {
               <span className="block">Join the KFC family today.</span>
             </h2>
             <p className="mt-4 text-lg leading-6 text-red-200">
-              Sign up now to begin your onboarding journey with KFC. Experience our streamlined process and become part of our amazing team.
+              Sign up now to begin your comprehensive onboarding journey with KFC. Experience our streamlined checklist and become part of our amazing team.
             </p>
             <Link to="/auth">
               <Button size="lg" className="mt-8 bg-white text-red-600 hover:bg-gray-100 px-8 py-3 text-lg font-medium">
@@ -244,7 +222,7 @@ const Index = () => {
             <div className="text-center">
               <h3 className="text-2xl font-bold text-white mb-4">KFC Onboarding Platform</h3>
               <p className="text-gray-400 mb-4">
-                Streamlining the employee onboarding experience with digital innovation.
+                Streamlining the employee onboarding experience with our comprehensive digital checklist.
               </p>
               <div className="flex justify-center space-x-6">
                 <Link to="/auth" className="text-gray-400 hover:text-white transition-colors">
@@ -265,105 +243,8 @@ const Index = () => {
     );
   }
 
-  // Authenticated user dashboard (existing functionality)
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <Header userEmail={user.email || ''} onSignOut={signOut} />
-      
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
-        {/* Welcome Section */}
-        <div className="mb-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Welcome to KFC Onboarding</h2>
-          <p className="text-lg text-gray-600 mb-6">
-            Get started with your employee onboarding process. Choose from our basic form or comprehensive checklist.
-          </p>
-          
-          {/* Feature Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <FileText className="h-5 w-5 text-blue-600" />
-                  Basic Onboarding Form
-                </CardTitle>
-                <CardDescription>
-                  Quick and simple form to collect essential employee information
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-gray-600 mb-4">
-                  Perfect for getting started with basic employee details like name, contact information, position, and start date.
-                </p>
-                <div className="text-sm text-gray-500">
-                  • Personal Information
-                  • Contact Details  
-                  • Position & Department
-                  • Start Date
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <CheckSquare className="h-5 w-5 text-green-600" />
-                  Comprehensive Checklist
-                </CardTitle>
-                <CardDescription>
-                  Complete onboarding checklist with all necessary steps
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p className="text-sm text-gray-600 mb-4">
-                  Comprehensive checklist covering all aspects of employee onboarding from documentation to training.
-                </p>
-                <Link to="/comprehensive">
-                  <Button className="w-full">
-                    Go to Comprehensive Checklist
-                  </Button>
-                </Link>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-
-        {/* Main Content */}
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 lg:gap-8">
-          <div className="xl:col-span-2">
-            <Card>
-              <CardHeader>
-                <CardTitle>Basic Onboarding Form</CardTitle>
-                <CardDescription>
-                  Fill out the essential information to get started
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <OnboardingForm
-                  formData={formData}
-                  onInputChange={handleInputChange}
-                  saveDialogOpen={saveDialogOpen}
-                  setSaveDialogOpen={setSaveDialogOpen}
-                  formName={formName}
-                  setFormName={setFormName}
-                  onSaveForm={handleSaveForm}
-                />
-              </CardContent>
-            </Card>
-          </div>
-          
-          <div className="xl:col-span-1">
-            <SavedFormsList
-              savedForms={savedForms}
-              loading={loading}
-              onLoadForm={handleLoadForm}
-              onDeleteForm={deleteForm}
-              formType="basic"
-            />
-          </div>
-        </div>
-      </main>
-    </div>
-  );
+  // This will not render as authenticated users are redirected
+  return null;
 };
 
 export default Index;
