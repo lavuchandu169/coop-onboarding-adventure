@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from "@/components/ui/button";
@@ -6,15 +7,17 @@ import { Link } from 'react-router-dom';
 import { CheckSquare, FileText, Users, Clock, Shield, Zap, Globe, ArrowRight } from 'lucide-react';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { usePageTitle } from '@/hooks/usePageTitle';
 
 const Index = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
+  usePageTitle('Welcome');
 
-  // Redirect authenticated users to comprehensive checklist
+  // Redirect authenticated users to dashboard
   useEffect(() => {
     if (user) {
-      navigate('/comprehensive');
+      navigate('/dashboard');
     }
   }, [user, navigate]);
 

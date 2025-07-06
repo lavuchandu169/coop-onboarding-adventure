@@ -10,7 +10,11 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
-    https: true as any  // ensure dev server uses HTTPS
+    https: {
+      // Use basic HTTPS for development
+      key: undefined,
+      cert: undefined,
+    },
   },
   plugins: [
     react(),
@@ -20,6 +24,17 @@ export default defineConfig(({ mode }) => ({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+    },
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom'],
+          router: ['react-router-dom'],
+          ui: ['@radix-ui/react-toast', '@radix-ui/react-dialog'],
+        },
+      },
     },
   },
 }));
