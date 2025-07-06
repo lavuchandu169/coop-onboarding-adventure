@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from "@/components/ui/button";
@@ -77,6 +76,56 @@ const Index = () => {
                 <p className="text-2xl font-bold mb-2">Comprehensive</p>
                 <p className="text-xl font-semibold opacity-90">Onboarding Checklist</p>
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Quick Access Section for Different Onboarding Types */}
+        <div className="py-16 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl font-extrabold text-gray-900 mb-4">Choose Your Onboarding Style</h2>
+              <p className="text-xl text-gray-600">Select the onboarding process that works best for your team</p>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+              <Card className="hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-2 border-red-100">
+                <CardHeader className="text-center pb-4">
+                  <div className="mx-auto bg-red-100 rounded-full p-4 w-16 h-16 flex items-center justify-center mb-4">
+                    <CheckSquare className="h-8 w-8 text-red-600" />
+                  </div>
+                  <CardTitle className="text-xl text-red-600">Comprehensive Checklist</CardTitle>
+                  <CardDescription>
+                    Complete digital onboarding with advanced features and form management
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="text-center">
+                  <Link to="/auth">
+                    <Button className="w-full bg-red-600 hover:bg-red-700 text-white">
+                      Access Comprehensive Form
+                    </Button>
+                  </Link>
+                </CardContent>
+              </Card>
+
+              <Card className="hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-2 border-orange-100">
+                <CardHeader className="text-center pb-4">
+                  <div className="mx-auto bg-orange-100 rounded-full p-4 w-16 h-16 flex items-center justify-center mb-4">
+                    <FileText className="h-8 w-8 text-orange-600" />
+                  </div>
+                  <CardTitle className="text-xl text-orange-600">Welcome to the Coop Form</CardTitle>
+                  <CardDescription>
+                    Fun, engaging onboarding experience with KFC personality and flair
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="text-center">
+                  <Link to="/onboarding">
+                    <Button variant="outline" className="w-full border-2 border-orange-600 text-orange-600 hover:bg-orange-50">
+                      Try Welcome Form
+                    </Button>
+                  </Link>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </div>
