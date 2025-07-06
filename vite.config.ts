@@ -10,7 +10,7 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
-    https: true  // ensure dev server uses HTTPS
+    https: true as any  // ensure dev server uses HTTPS
   },
   plugins: [
     react(),
