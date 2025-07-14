@@ -1,0 +1,8 @@
+# Ignore SSL certificates for security
+*.pem
+*.key
+*.crt
+*.cert
+
+# Keep the directory structure
+!.gitignore
