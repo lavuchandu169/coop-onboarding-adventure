@@ -48,22 +48,38 @@ function App() {
                       </ProtectedRoute>
                     } 
                   />
-                  <Route 
-                    path="/comprehensive" 
-                    element={
-                      <ProtectedRoute>
-                        <ComprehensiveOnboarding />
-                      </ProtectedRoute>
-                    } 
-                  />
-                  <Route 
-                    path="/onboarding" 
-                    element={
-                      <ProtectedRoute>
-                        <OnboardingForm />
-                      </ProtectedRoute>
-                    } 
-                  />
+                   <Route 
+                     path="/comprehensive" 
+                     element={
+                       <ProtectedRoute>
+                         <ComprehensiveOnboarding />
+                       </ProtectedRoute>
+                     } 
+                   />
+                   <Route 
+                     path="/pro-suite" 
+                     element={
+                       <ProtectedRoute>
+                         <ComprehensiveOnboarding />
+                       </ProtectedRoute>
+                     } 
+                   />
+                   <Route 
+                     path="/onboarding" 
+                     element={
+                       <ProtectedRoute>
+                         <OnboardingForm />
+                       </ProtectedRoute>
+                     } 
+                   />
+                   <Route 
+                     path="/coop-welcome" 
+                     element={
+                       <ProtectedRoute>
+                         <OnboardingForm />
+                       </ProtectedRoute>
+                     } 
+                   />
                 </Route>
                 
                 {/* 404 page */}

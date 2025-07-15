@@ -3,6 +3,7 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 import { Header } from './Header';
 import { Footer } from './Footer';
+import { FloatingActionButton } from '../FloatingActionButton';
 
 interface LayoutProps {
   showHeader?: boolean;
@@ -20,6 +21,7 @@ export const Layout: React.FC<LayoutProps> = ({
         <Outlet />
       </main>
       {showFooter && <Footer />}
+      <FloatingActionButton />
     </div>
   );
 };

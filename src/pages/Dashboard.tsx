@@ -19,29 +19,31 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-background">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Welcome Section */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
-            Welcome back, {user?.email?.split('@')[0]}!
+        <div className="mb-8 animate-fade-in-up">
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">
+            Welcome to the Coop, {user?.email?.split('@')[0]}!
           </h1>
-          <p className="text-gray-600">
-            Here's your onboarding overview and quick access to forms.
+          <p className="text-xl text-gray-600">
+            Your premium dashboard for managing onboarding experiences and tracking progress.
           </p>
         </div>
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
           {stats.map((stat, index) => (
-            <Card key={index} className="hover:shadow-lg transition-shadow">
+            <Card key={index} className="glass-card hover-lift hover-glow shadow-medium border-0 animate-fade-in-up" style={{animationDelay: `${index * 0.1}s`}}>
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-gray-600">{stat.label}</p>
-                    <p className="text-3xl font-bold text-gray-900">{stat.value}</p>
+                    <p className="text-sm font-medium text-muted-foreground">{stat.label}</p>
+                    <p className="text-3xl font-bold text-foreground">{stat.value}</p>
                   </div>
-                  <stat.icon className={`h-8 w-8 ${stat.color}`} />
+                  <div className="p-3 rounded-xl bg-gradient-primary/10">
+                    <stat.icon className={`h-6 w-6 ${stat.color}`} />
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -50,55 +52,55 @@ const Dashboard = () => {
 
         {/* Quick Actions */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <Card className="hover:shadow-xl transition-all duration-300">
+          <Card className="glass-card hover-lift hover-glow shadow-large border-0 animate-fade-in-up">
             <CardHeader>
               <div className="flex items-center gap-3">
-                <div className="p-3 bg-red-100 rounded-lg">
-                  <CheckSquare className="h-6 w-6 text-red-600" />
+                <div className="p-3 bg-gradient-primary rounded-xl shadow-glow animate-glow">
+                  <CheckSquare className="h-6 w-6 text-white" />
                 </div>
                 <div>
-                  <CardTitle className="text-xl">Comprehensive Checklist</CardTitle>
+                  <CardTitle className="text-xl text-primary font-bold">Pro Checklist Suite</CardTitle>
                   <CardDescription>
-                    Complete digital onboarding with advanced features
+                    Executive-level onboarding with advanced analytics
                   </CardDescription>
                 </div>
               </div>
             </CardHeader>
             <CardContent>
               <p className="text-gray-600 mb-4">
-                Access the full onboarding checklist with pre-flight checks, first day experience, 
-                and 30-day journey tracking.
+                Access the premium onboarding experience with comprehensive tracking, 
+                advanced analytics, and executive-level features.
               </p>
               <Link to="/comprehensive">
-                <Button className="w-full bg-red-600 hover:bg-red-700">
-                  Start Comprehensive Form
+                <Button className="w-full bg-gradient-primary hover-lift hover-glow shadow-medium">
+                  Launch Pro Suite
                 </Button>
               </Link>
             </CardContent>
           </Card>
 
-          <Card className="hover:shadow-xl transition-all duration-300">
+          <Card className="glass-card hover-lift hover-glow shadow-large border-0 animate-fade-in-up" style={{animationDelay: '0.2s'}}>
             <CardHeader>
               <div className="flex items-center gap-3">
-                <div className="p-3 bg-orange-100 rounded-lg">
-                  <FileText className="h-6 w-6 text-orange-600" />
+                <div className="p-3 bg-gradient-secondary rounded-xl shadow-glow animate-glow">
+                  <FileText className="h-6 w-6 text-white" />
                 </div>
                 <div>
-                  <CardTitle className="text-xl">Welcome to the Coop</CardTitle>
+                  <CardTitle className="text-xl text-accent font-bold">Coop Welcome Experience</CardTitle>
                   <CardDescription>
-                    Fun, engaging onboarding with KFC personality
+                    Immersive journey with KFC's signature personality
                   </CardDescription>
                 </div>
               </div>
             </CardHeader>
             <CardContent>
               <p className="text-gray-600 mb-4">
-                Experience our engaging welcome form designed with KFC's unique 
-                personality and culture in mind.
+                Dive into our signature welcome experience designed with KFC's unique 
+                culture, warmth, and engaging personality.
               </p>
               <Link to="/onboarding">
-                <Button variant="outline" className="w-full border-2 border-orange-600 text-orange-600 hover:bg-orange-50">
-                  Try Welcome Form
+                <Button variant="outline" className="w-full border-2 glass-card hover-lift border-accent text-accent hover:bg-accent/10">
+                  Start Welcome Journey
                 </Button>
               </Link>
             </CardContent>
@@ -106,27 +108,33 @@ const Dashboard = () => {
         </div>
 
         {/* Recent Activity */}
-        <Card className="mt-8">
+        <Card className="mt-8 glass-card shadow-large border-0 animate-fade-in-up" style={{animationDelay: '0.4s'}}>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Award className="h-5 w-5 text-red-600" />
-              Recent Activity
+              <div className="p-2 bg-gradient-primary/10 rounded-lg">
+                <Award className="h-5 w-5 text-primary" />
+              </div>
+              Recent Coop Activity
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              <div className="flex items-center gap-4 p-4 bg-green-50 rounded-lg">
-                <CheckSquare className="h-5 w-5 text-green-600" />
+              <div className="flex items-center gap-4 p-4 glass-card rounded-xl hover-lift">
+                <div className="p-2 bg-green-100 rounded-lg">
+                  <CheckSquare className="h-5 w-5 text-green-600" />
+                </div>
                 <div className="flex-1">
-                  <p className="font-medium text-gray-900">Pre-flight Checks Completed</p>
-                  <p className="text-sm text-gray-600">Completed 2 hours ago</p>
+                  <p className="font-medium text-gray-900">Pro Checklist Progress</p>
+                  <p className="text-sm text-muted-foreground">Advanced features unlocked 2 hours ago</p>
                 </div>
               </div>
-              <div className="flex items-center gap-4 p-4 bg-blue-50 rounded-lg">
-                <FileText className="h-5 w-5 text-blue-600" />
+              <div className="flex items-center gap-4 p-4 glass-card rounded-xl hover-lift">
+                <div className="p-2 bg-blue-100 rounded-lg">
+                  <FileText className="h-5 w-5 text-blue-600" />
+                </div>
                 <div className="flex-1">
-                  <p className="font-medium text-gray-900">Welcome Form Started</p>
-                  <p className="text-sm text-gray-600">Started 1 day ago</p>
+                  <p className="font-medium text-gray-900">Welcome Experience Initiated</p>
+                  <p className="text-sm text-muted-foreground">Journey started 1 day ago</p>
                 </div>
               </div>
             </div>

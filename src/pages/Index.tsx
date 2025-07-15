@@ -42,93 +42,95 @@ const Index = () => {
                     </div>
                   </div>
                   
-                  <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-                    <span className="block xl:inline">Welcome to</span>{' '}
-                    <span className="block text-red-600 xl:inline">KFC Onboarding</span>
-                  </h1>
-                  <p className="mt-6 text-base text-gray-600 sm:mt-8 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-8 md:text-xl lg:mx-0 leading-relaxed">
-                    Streamline your employee onboarding process with our comprehensive digital checklist. 
-                    From pre-flight checks to final sign-off, we make onboarding simple and efficient.
-                  </p>
-                  <div className="mt-8 sm:mt-10 sm:flex sm:justify-center lg:justify-start gap-4">
-                    <div className="rounded-md shadow-lg">
-                      <Link to="/auth">
-                        <Button size="lg" className="w-full bg-red-600 hover:bg-red-700 text-white px-8 py-4 text-lg font-semibold transition-all duration-200 hover:shadow-xl transform hover:-translate-y-0.5">
-                          Get Started
-                          <ArrowRight className="ml-2 h-5 w-5" />
-                        </Button>
-                      </Link>
-                    </div>
-                    <div className="mt-3 sm:mt-0">
-                      <Link to="/auth">
-                        <Button variant="outline" size="lg" className="w-full px-8 py-4 text-lg font-semibold border-2 border-red-600 text-red-600 hover:bg-red-50 transition-all duration-200 hover:shadow-lg">
-                          Sign In
-                        </Button>
-                      </Link>
-                    </div>
-                  </div>
+                   <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl animate-fade-in-up">
+                     <span className="block xl:inline">Welcome to the</span>{' '}
+                     <span className="block bg-gradient-primary bg-clip-text text-transparent xl:inline animate-glow">KFC Coop Hub</span>
+                   </h1>
+                   <p className="mt-6 text-base text-gray-600 sm:mt-8 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-8 md:text-xl lg:mx-0 leading-relaxed animate-slide-up">
+                     Your premium onboarding destination where new team members transform into KFC champions. 
+                     Experience our state-of-the-art digital platform designed for excellence and efficiency.
+                   </p>
+                   <div className="mt-8 sm:mt-10 sm:flex sm:justify-center lg:justify-start gap-4 animate-fade-in-up">
+                     <div className="rounded-md shadow-large">
+                       <Link to="/auth">
+                         <Button size="lg" className="w-full bg-gradient-primary hover-lift hover-glow text-white px-8 py-4 text-lg font-semibold shadow-glow">
+                           Enter the Coop
+                           <ArrowRight className="ml-2 h-5 w-5" />
+                         </Button>
+                       </Link>
+                     </div>
+                     <div className="mt-3 sm:mt-0">
+                       <Link to="/auth">
+                         <Button variant="outline" size="lg" className="w-full px-8 py-4 text-lg font-semibold border-2 glass-card hover-lift hover:border-primary/50">
+                           Team Access
+                         </Button>
+                       </Link>
+                     </div>
+                   </div>
                 </div>
               </main>
             </div>
           </div>
-          <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
-            <div className="h-56 w-full bg-gradient-to-br from-red-600 via-red-700 to-red-800 sm:h-72 md:h-96 lg:w-full lg:h-full flex items-center justify-center relative overflow-hidden">
-              <div className="absolute inset-0 bg-black opacity-10"></div>
-              <div className="text-center text-white relative z-10">
-                <CheckSquare className="h-28 w-28 mx-auto mb-6 opacity-90 drop-shadow-lg" />
-                <p className="text-2xl font-bold mb-2">Comprehensive</p>
-                <p className="text-xl font-semibold opacity-90">Onboarding Checklist</p>
-              </div>
-            </div>
-          </div>
+           <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
+             <div className="h-56 w-full bg-gradient-primary sm:h-72 md:h-96 lg:w-full lg:h-full flex items-center justify-center relative overflow-hidden">
+               <div className="absolute inset-0 bg-black/20 backdrop-blur-sm"></div>
+               <div className="text-center text-white relative z-10 animate-float">
+                 <CheckSquare className="h-28 w-28 mx-auto mb-6 opacity-90 drop-shadow-2xl animate-glow" />
+                 <p className="text-3xl font-bold mb-2">Premium</p>
+                 <p className="text-xl font-semibold opacity-90">Coop Experience</p>
+               </div>
+               <div className="absolute top-4 right-4 w-20 h-20 bg-white/10 rounded-full animate-float"></div>
+               <div className="absolute bottom-8 left-8 w-12 h-12 bg-white/5 rounded-full animate-float" style={{animationDelay: '2s'}}></div>
+             </div>
+           </div>
         </div>
 
         {/* Quick Access Section for Different Onboarding Types */}
         <div className="py-16 bg-white">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-extrabold text-gray-900 mb-4">Choose Your Onboarding Style</h2>
-              <p className="text-xl text-gray-600">Select the onboarding process that works best for your team</p>
-            </div>
+             <div className="text-center mb-12 animate-fade-in-up">
+               <h2 className="text-3xl font-extrabold text-gray-900 mb-4">Choose Your Coop Experience</h2>
+               <p className="text-xl text-gray-600">Select the premium onboarding journey that matches your style</p>
+             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-              <Card className="hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-2 border-red-100">
-                <CardHeader className="text-center pb-4">
-                  <div className="mx-auto bg-red-100 rounded-full p-4 w-16 h-16 flex items-center justify-center mb-4">
-                    <CheckSquare className="h-8 w-8 text-red-600" />
-                  </div>
-                  <CardTitle className="text-xl text-red-600">Comprehensive Checklist</CardTitle>
-                  <CardDescription>
-                    Complete digital onboarding with advanced features and form management
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="text-center">
-                  <Link to="/auth">
-                    <Button className="w-full bg-red-600 hover:bg-red-700 text-white">
-                      Access Comprehensive Form
-                    </Button>
-                  </Link>
-                </CardContent>
-              </Card>
+               <Card className="glass-card hover-lift hover-glow shadow-medium border-0 animate-fade-in-up">
+                 <CardHeader className="text-center pb-4">
+                   <div className="mx-auto bg-gradient-primary rounded-xl p-4 w-16 h-16 flex items-center justify-center mb-4 shadow-glow animate-glow">
+                     <CheckSquare className="h-8 w-8 text-white" />
+                   </div>
+                   <CardTitle className="text-xl text-primary font-bold">Pro Checklist Suite</CardTitle>
+                   <CardDescription className="text-gray-600">
+                     Executive-level onboarding with advanced analytics and comprehensive tracking
+                   </CardDescription>
+                 </CardHeader>
+                 <CardContent className="text-center">
+                   <Link to="/auth">
+                     <Button className="w-full bg-gradient-primary hover-lift hover-glow shadow-medium">
+                       Access Pro Suite
+                     </Button>
+                   </Link>
+                 </CardContent>
+               </Card>
 
-              <Card className="hover:shadow-xl transition-all duration-300 hover:-translate-y-2 border-2 border-orange-100">
-                <CardHeader className="text-center pb-4">
-                  <div className="mx-auto bg-orange-100 rounded-full p-4 w-16 h-16 flex items-center justify-center mb-4">
-                    <FileText className="h-8 w-8 text-orange-600" />
-                  </div>
-                  <CardTitle className="text-xl text-orange-600">Welcome to the Coop Form</CardTitle>
-                  <CardDescription>
-                    Fun, engaging onboarding experience with KFC personality and flair
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="text-center">
-                  <Link to="/onboarding">
-                    <Button variant="outline" className="w-full border-2 border-orange-600 text-orange-600 hover:bg-orange-50">
-                      Try Welcome Form
-                    </Button>
-                  </Link>
-                </CardContent>
-              </Card>
+               <Card className="glass-card hover-lift hover-glow shadow-medium border-0 animate-fade-in-up" style={{animationDelay: '0.2s'}}>
+                 <CardHeader className="text-center pb-4">
+                   <div className="mx-auto bg-gradient-secondary rounded-xl p-4 w-16 h-16 flex items-center justify-center mb-4 shadow-glow animate-glow">
+                     <FileText className="h-8 w-8 text-white" />
+                   </div>
+                   <CardTitle className="text-xl text-accent font-bold">Coop Welcome Experience</CardTitle>
+                   <CardDescription className="text-gray-600">
+                     Immersive, personality-driven journey with KFC's signature warmth and culture
+                   </CardDescription>
+                 </CardHeader>
+                 <CardContent className="text-center">
+                   <Link to="/onboarding">
+                     <Button variant="outline" className="w-full border-2 glass-card hover-lift border-accent text-accent hover:bg-accent/10">
+                       Start Welcome Journey
+                     </Button>
+                   </Link>
+                 </CardContent>
+               </Card>
             </div>
           </div>
         </div>
