@@ -35,12 +35,33 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setLoading(false);
     });
 
-    // Listen for auth changes
+    // Listen for auth changes and log activities
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
+      async (event, session) => {
         setSession(session);
         setUser(session?.user ?? null);
         setLoading(false);
+
+        // Log authentication activities
+        if (event === 'SIGNED_IN' && session?.user) {
+          try {
+            await supabase.rpc('log_user_activity', {
+              target_user_id: session.user.id,
+              act_type: 'login',
+              act_description: 'User signed in to KFC Coop Hub',
+              act_metadata: {
+                timestamp: new Date().toISOString(),
+                provider: 'email',
+                email: session.user.email
+              }
+            });
+          } catch (error) {
+            console.error('Error logging sign-in activity:', error);
+          }
+        } else if (event === 'SIGNED_OUT') {
+          // We can't log the logout activity for the user since they're no longer authenticated
+          console.log('User signed out');
+        }
       }
     );
 
@@ -65,6 +86,23 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   const signOut = async () => {
+    // Log logout activity before signing out
+    if (user) {
+      try {
+        await supabase.rpc('log_user_activity', {
+          target_user_id: user.id,
+          act_type: 'logout',
+          act_description: 'User signed out from KFC Coop Hub',
+          act_metadata: {
+            timestamp: new Date().toISOString(),
+            email: user.email
+          }
+        });
+      } catch (error) {
+        console.error('Error logging sign-out activity:', error);
+      }
+    }
+    
     await supabase.auth.signOut();
   };
 

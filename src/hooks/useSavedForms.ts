@@ -13,6 +13,20 @@ interface SavedForm {
   updated_at: string;
 }
 
+// Helper function to log activity
+const logActivity = async (userId: string, activityType: string, description: string, metadata: any = {}) => {
+  try {
+    await supabase.rpc('log_user_activity', {
+      target_user_id: userId,
+      act_type: activityType,
+      act_description: description,
+      act_metadata: metadata
+    });
+  } catch (error) {
+    console.error('Error logging activity:', error);
+  }
+};
+
 export const useSavedForms = () => {
   const [savedForms, setSavedForms] = useState<SavedForm[]>([]);
   const [loading, setLoading] = useState(false);
@@ -105,6 +119,13 @@ export const useSavedForms = () => {
           title: "Success!",
           description: "Form updated successfully!",
         });
+
+        // Log activity for form update
+        await logActivity(user.id, 'form_saved', `Updated form: ${formName}`, {
+          formName,
+          formType,
+          action: 'update'
+        });
       } else {
         // Insert new form
         console.log('Creating new form');
@@ -125,6 +146,13 @@ export const useSavedForms = () => {
         toast({
           title: "Success!",
           description: "Form saved successfully!",
+        });
+
+        // Log activity for new form
+        await logActivity(user.id, 'form_saved', `Created new form: ${formName}`, {
+          formName,
+          formType,
+          action: 'create'
         });
       }
 
@@ -169,6 +197,12 @@ export const useSavedForms = () => {
         title: "Success!",
         description: "Form loaded successfully!",
       });
+
+      // Log activity for form load
+      await logActivity(user.id, 'form_loaded', `Loaded saved form`, {
+        formId,
+        action: 'load'
+      });
       
       return data.form_data;
     } catch (error) {
@@ -208,6 +242,12 @@ export const useSavedForms = () => {
       toast({
         title: "Success!",
         description: "Form deleted successfully!",
+      });
+
+      // Log activity for form deletion
+      await logActivity(user.id, 'form_deleted', `Deleted saved form`, {
+        formId,
+        action: 'delete'
       });
 
       fetchSavedForms();

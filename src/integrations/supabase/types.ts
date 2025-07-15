@@ -68,12 +68,87 @@ export type Database = {
         }
         Relationships: []
       }
+      user_activities: {
+        Row: {
+          activity_description: string
+          activity_type: string
+          created_at: string | null
+          id: string
+          metadata: Json | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          activity_description: string
+          activity_type: string
+          created_at?: string | null
+          id?: string
+          metadata?: Json | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          activity_description?: string
+          activity_type?: string
+          created_at?: string | null
+          id?: string
+          metadata?: Json | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_statistics: {
+        Row: {
+          created_at: string | null
+          forms_completed: number | null
+          forms_in_progress: number | null
+          id: string
+          last_activity_at: string | null
+          total_activities: number | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          forms_completed?: number | null
+          forms_in_progress?: number | null
+          id?: string
+          last_activity_at?: string | null
+          total_activities?: number | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          forms_completed?: number | null
+          forms_in_progress?: number | null
+          id?: string
+          last_activity_at?: string | null
+          total_activities?: number | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      log_user_activity: {
+        Args: {
+          target_user_id: string
+          act_type: string
+          act_description: string
+          act_metadata?: Json
+        }
+        Returns: string
+      }
+      update_user_statistics: {
+        Args: { target_user_id: string }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
