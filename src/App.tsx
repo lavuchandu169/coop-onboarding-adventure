@@ -13,6 +13,9 @@ import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import ComprehensiveOnboarding from "./pages/ComprehensiveOnboarding";
 import OnboardingForm from "./pages/OnboardingForm";
+import Settings from "./pages/Settings";
+import Profile from "./pages/Profile";
+import Help from "./pages/Help";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient({
@@ -77,6 +80,30 @@ function App() {
                      element={
                        <ProtectedRoute>
                          <OnboardingForm />
+                       </ProtectedRoute>
+                     } 
+                   />
+                   <Route 
+                     path="/settings" 
+                     element={
+                       <ProtectedRoute>
+                         <Settings />
+                       </ProtectedRoute>
+                     } 
+                   />
+                   <Route 
+                     path="/profile" 
+                     element={
+                       <ProtectedRoute>
+                         <Profile />
+                       </ProtectedRoute>
+                     } 
+                   />
+                   <Route 
+                     path="/help" 
+                     element={
+                       <ProtectedRoute>
+                         <Help />
                        </ProtectedRoute>
                      } 
                    />
