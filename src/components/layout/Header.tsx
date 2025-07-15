@@ -38,6 +38,12 @@ export const Header: React.FC = () => {
             {user ? (
               <>
                  <Link 
+                   to="/dashboard" 
+                   className="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-600 hover:text-primary hover:bg-white/50 transition-all duration-200 hover-glow"
+                 >
+                   Dashboard
+                 </Link>
+                 <Link 
                    to="/comprehensive" 
                    className="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-600 hover:text-primary hover:bg-white/50 transition-all duration-200 hover-glow"
                  >

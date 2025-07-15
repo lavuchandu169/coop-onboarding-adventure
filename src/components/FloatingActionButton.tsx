@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Plus, MessageSquare, Phone, Mail, HelpCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export const FloatingActionButton: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,12 +26,23 @@ export const FloatingActionButton: React.FC = () => {
             <span className="bg-white text-gray-800 px-3 py-1 rounded-lg shadow-medium text-sm font-medium whitespace-nowrap glass-card">
               {action.label}
             </span>
-            <Button
-              size="sm"
-              className={`${action.color} rounded-full w-12 h-12 shadow-large hover-lift hover-glow`}
-            >
-              <action.icon className="h-5 w-5 text-white" />
-            </Button>
+            {action.label === 'FAQ' ? (
+              <Link to="/help">
+                <Button
+                  size="sm"
+                  className={`${action.color} rounded-full w-12 h-12 shadow-large hover-lift hover-glow`}
+                >
+                  <action.icon className="h-5 w-5 text-white" />
+                </Button>
+              </Link>
+            ) : (
+              <Button
+                size="sm"
+                className={`${action.color} rounded-full w-12 h-12 shadow-large hover-lift hover-glow`}
+              >
+                <action.icon className="h-5 w-5 text-white" />
+              </Button>
+            )}
           </div>
         ))}
       </div>
