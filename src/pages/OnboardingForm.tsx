@@ -65,31 +65,31 @@ const OnboardingForm = () => {
       <Header userEmail={user.email || ''} onSignOut={signOut} />
       
       {/* KFC Header */}
-      <div className="bg-gradient-to-r from-red-600 to-red-700 text-white p-6 text-center shadow-xl">
+      <div className="bg-gradient-to-r from-red-600 to-red-700 text-white p-4 sm:p-6 text-center shadow-xl animate-fade-in-up">
         <div className="max-w-4xl mx-auto">
-          <div className="flex justify-center mb-4">
+          <div className="flex justify-center mb-4 animate-scale-in">
             <img 
               src="https://upload.wikimedia.org/wikipedia/sco/thumb/b/bf/KFC_logo.svg/1024px-KFC_logo.svg.png"
               alt="KFC Logo"
-              className="h-16 w-auto"
+              className="h-12 sm:h-16 w-auto transition-smooth hover-lift interactive"
             />
           </div>
-          <h1 className="text-2xl md:text-4xl font-extrabold mb-2">
+          <h1 className="text-xl sm:text-2xl md:text-4xl font-extrabold mb-2 animate-slide-up">
             Team Member: Welcome to the Coop!
           </h1>
-          <p className="text-xl md:text-2xl font-semibold">
+          <p className="text-lg sm:text-xl md:text-2xl font-semibold animate-slide-up" style={{animationDelay: '0.1s'}}>
             Your Onboarding Adventure!
           </p>
         </div>
       </div>
 
-      <main className="max-w-4xl mx-auto p-4 md:p-8">
+      <main className="max-w-4xl mx-auto p-3 sm:p-4 md:p-8 animate-fade-in-up" style={{animationDelay: '0.2s'}}>
         <form onSubmit={handleSubmit}>
           
           {/* Team Member Name Section */}
-          <Card className="mb-6 shadow-lg">
-            <CardContent className="pt-6">
-              <label htmlFor="newTmName" className="block text-xl font-semibold text-gray-800 mb-2">
+          <Card className="mb-4 sm:mb-6 shadow-lg hover-lift transition-smooth glass-card animate-scale-in">
+            <CardContent className="p-4 sm:pt-6">
+              <label htmlFor="newTmName" className="block text-lg sm:text-xl font-semibold text-gray-800 mb-2">
                 Our Newest Star's Name:
               </label>
               <Input 
@@ -98,7 +98,7 @@ const OnboardingForm = () => {
                 name="team_member_name" 
                 value={formData.teamMemberName}
                 onChange={(e) => handleInputChange('teamMemberName', e.target.value)}
-                className="w-full md:w-2/3 text-lg focus:ring-red-600 focus:border-red-600"
+                className="w-full md:w-2/3 text-base sm:text-lg focus:ring-red-600 focus:border-red-600 transition-fast"
                 placeholder="Enter Team Member's Name" 
               />
             </CardContent>
@@ -319,10 +319,10 @@ const OnboardingForm = () => {
           {/* For brevity, I'll add a few more key sections */}
 
           {/* Submit Button */}
-          <div className="mt-8">
+          <div className="mt-6 sm:mt-8 animate-scale-in" style={{animationDelay: '0.4s'}}>
             <Button 
               type="submit" 
-              className="w-full bg-red-600 hover:bg-red-700 text-white font-bold text-xl py-6 px-6 rounded-lg shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105"
+              className="w-full bg-red-600 hover:bg-red-700 text-white font-bold text-lg sm:text-xl py-4 sm:py-6 px-4 sm:px-6 rounded-lg shadow-lg transition-fast interactive hover-glow"
             >
               🍗 Complete Onboarding & Submit
             </Button>

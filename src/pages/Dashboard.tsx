@@ -82,10 +82,10 @@ const Dashboard = () => {
         </div>
 
         {/* Enhanced Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
           {stats.map((stat, index) => (
-            <Card key={index} className="glass-card hover-lift hover-glow shadow-medium border-0 animate-fade-in-up" style={{animationDelay: `${index * 0.1}s`}}>
-              <CardContent className="p-6">
+            <Card key={index} className="glass-card hover-lift hover-glow shadow-medium border-0 animate-fade-in-up transition-smooth" style={{animationDelay: `${index * 0.05}s`}}>
+              <CardContent className="p-4 sm:p-6">
                 <div className="flex items-center justify-between mb-2">
                   <div className="p-3 rounded-xl bg-gradient-primary/10">
                     <stat.icon className={`h-6 w-6 ${stat.color}`} />
@@ -105,9 +105,9 @@ const Dashboard = () => {
         </div>
 
         {/* Quick Actions */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <Card className="glass-card hover-lift hover-glow shadow-large border-0 animate-fade-in-up">
-            <CardHeader>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+          <Card className="glass-card hover-lift hover-glow shadow-large border-0 animate-fade-in-up transition-smooth">
+            <CardHeader className="p-4 sm:p-6">
               <div className="flex items-center gap-3">
                 <div className="p-3 bg-gradient-primary rounded-xl shadow-glow animate-glow">
                   <CheckSquare className="h-6 w-6 text-white" />
@@ -120,14 +120,14 @@ const Dashboard = () => {
                 </div>
               </div>
             </CardHeader>
-            <CardContent>
-              <p className="text-gray-600 mb-4">
+            <CardContent className="p-4 sm:p-6">
+              <p className="text-gray-600 mb-4 text-sm sm:text-base">
                 Access the premium onboarding experience with comprehensive tracking, 
                 advanced analytics, and executive-level features.
               </p>
               <Link to="/comprehensive">
                 <Button 
-                  className="w-full bg-gradient-primary hover-lift hover-glow shadow-medium"
+                  className="w-full bg-gradient-primary hover-lift hover-glow shadow-medium transition-fast interactive"
                   onClick={() => logActivity('pro_suite_accessed', 'User accessed Pro Checklist Suite', { source: 'dashboard' })}
                 >
                   Launch Pro Suite
@@ -136,8 +136,8 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          <Card className="glass-card hover-lift hover-glow shadow-large border-0 animate-fade-in-up" style={{animationDelay: '0.2s'}}>
-            <CardHeader>
+          <Card className="glass-card hover-lift hover-glow shadow-large border-0 animate-fade-in-up transition-smooth" style={{animationDelay: '0.1s'}}>
+            <CardHeader className="p-4 sm:p-6">
               <div className="flex items-center gap-3">
                 <div className="p-3 bg-gradient-secondary rounded-xl shadow-glow animate-glow">
                   <FileText className="h-6 w-6 text-white" />
@@ -150,15 +150,15 @@ const Dashboard = () => {
                 </div>
               </div>
             </CardHeader>
-            <CardContent>
-              <p className="text-gray-600 mb-4">
+            <CardContent className="p-4 sm:p-6">
+              <p className="text-gray-600 mb-4 text-sm sm:text-base">
                 Dive into our signature welcome experience designed with KFC's unique 
                 culture, warmth, and engaging personality.
               </p>
               <Link to="/onboarding">
                 <Button 
                   variant="outline" 
-                  className="w-full border-2 glass-card hover-lift border-accent text-accent hover:bg-accent/10"
+                  className="w-full border-2 glass-card hover-lift border-accent text-accent hover:bg-accent/10 transition-fast interactive"
                   onClick={() => logActivity('coop_welcome_started', 'User started Coop Welcome Experience', { source: 'dashboard' })}
                 >
                   Start Welcome Journey
@@ -169,8 +169,8 @@ const Dashboard = () => {
         </div>
 
         {/* Real-time Activity Feed */}
-        <Card className="mt-8 glass-card shadow-large border-0 animate-fade-in-up" style={{animationDelay: '0.4s'}}>
-          <CardHeader>
+        <Card className="mt-6 sm:mt-8 glass-card shadow-large border-0 animate-fade-in-up transition-smooth" style={{animationDelay: '0.2s'}}>
+          <CardHeader className="p-4 sm:p-6">
             <CardTitle className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <div className="p-2 bg-gradient-primary/10 rounded-lg">
@@ -183,19 +183,19 @@ const Dashboard = () => {
               </Badge>
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="p-4 sm:p-6">
             {loading ? (
               <div className="flex items-center justify-center py-8">
-                <div className="w-8 h-8 border-2 border-primary/20 border-t-primary rounded-full animate-spin"></div>
-                <span className="ml-3 text-muted-foreground">Loading activities...</span>
+                <div className="w-6 h-6 sm:w-8 sm:h-8 border-2 border-primary/20 border-t-primary rounded-full animate-spin"></div>
+                <span className="ml-3 text-muted-foreground text-sm sm:text-base">Loading activities...</span>
               </div>
             ) : activities.length > 0 ? (
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 {activities.map((activity, index) => (
                   <div
                     key={activity.id}
-                    className="flex items-start gap-4 p-4 glass-card rounded-xl hover-lift"
-                    style={{ animationDelay: `${index * 0.1}s` }}
+                    className="flex items-start gap-3 sm:gap-4 p-3 sm:p-4 glass-card rounded-xl hover-lift transition-fast animate-scale-in"
+                    style={{ animationDelay: `${index * 0.05}s` }}
                   >
                     <div className={`p-2 rounded-lg ${getActivityColor(activity.activity_type)}`}>
                       <Activity className="h-4 w-4" />

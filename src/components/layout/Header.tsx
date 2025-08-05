@@ -34,41 +34,42 @@ export const Header: React.FC = () => {
           </Link>
 
           {/* Navigation */}
-          <nav className="hidden md:flex items-center gap-6">
+          <nav className="hidden md:flex items-center gap-4 lg:gap-6">
             {user ? (
               <>
                  <Link 
                    to="/dashboard" 
-                   className="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-600 hover:text-primary hover:bg-white/50 transition-all duration-200 hover-glow"
+                   className="flex items-center gap-2 px-2 lg:px-3 py-2 rounded-lg text-gray-600 hover:text-primary hover:bg-white/50 transition-fast hover-glow interactive text-sm lg:text-base"
                  >
-                   Dashboard
+                   <Home className="h-4 w-4" />
+                   <span className="hidden lg:inline">Dashboard</span>
                  </Link>
                  <Link 
                    to="/comprehensive" 
-                   className="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-600 hover:text-primary hover:bg-white/50 transition-all duration-200 hover-glow"
+                   className="flex items-center gap-2 px-2 lg:px-3 py-2 rounded-lg text-gray-600 hover:text-primary hover:bg-white/50 transition-fast hover-glow interactive text-sm lg:text-base"
                  >
                    <CheckSquare className="h-4 w-4" />
-                   Pro Checklist
+                   <span className="hidden lg:inline">Pro Checklist</span>
                  </Link>
                  <Link 
                    to="/onboarding" 
-                   className="flex items-center gap-2 px-3 py-2 rounded-lg text-gray-600 hover:text-accent hover:bg-white/50 transition-all duration-200 hover-glow"
+                   className="flex items-center gap-2 px-2 lg:px-3 py-2 rounded-lg text-gray-600 hover:text-accent hover:bg-white/50 transition-fast hover-glow interactive text-sm lg:text-base"
                  >
                    <FileText className="h-4 w-4" />
-                   Coop Welcome
+                   <span className="hidden lg:inline">Coop Welcome</span>
                  </Link>
-                <div className="flex items-center gap-2 text-gray-600">
+                <div className="hidden lg:flex items-center gap-2 text-gray-600">
                   <User className="h-4 w-4" />
-                  <span className="text-sm">{user.email}</span>
+                  <span className="text-sm">{user.email?.split('@')[0]}</span>
                 </div>
                  <Button 
                    variant="outline" 
                    size="sm" 
                    onClick={handleLogout}
-                   className="flex items-center gap-2 hover-lift border-primary/20 hover:border-primary hover:bg-primary/10"
+                   className="flex items-center gap-2 hover-lift border-primary/20 hover:border-primary hover:bg-primary/10 transition-fast"
                  >
                    <LogOut className="h-4 w-4" />
-                   Sign Out
+                   <span className="hidden sm:inline">Sign Out</span>
                  </Button>
               </>
             ) : (
