@@ -39,6 +39,7 @@ const Auth = () => {
         });
         
         if (error) {
+          console.error('Reset password error:', error);
           toast({
             title: "Reset Password Error",
             description: error.message,
@@ -52,39 +53,49 @@ const Auth = () => {
           setIsForgotPassword(false);
         }
       } else if (isLogin) {
+        console.log('Attempting login with:', { email, passwordLength: password.length });
         const { error } = await signIn(email, password);
         if (error) {
+          console.error('Login error details:', error);
           toast({
             title: "Login Error",
-            description: error.message,
+            description: error.message || "Invalid email or password. Please try again.",
             variant: "destructive",
           });
         } else {
+          console.log('Login successful');
           toast({
             title: "Success!",
             description: "Logged in successfully!",
           });
-          navigate('/');
+          navigate('/dashboard');
         }
       } else {
+        console.log('Attempting signup with:', { email, fullName, passwordLength: password.length });
         const { error } = await signUp(email, password, fullName);
         if (error) {
+          console.error('Signup error details:', error);
           toast({
             title: "Signup Error",
-            description: error.message,
+            description: error.message || "Failed to create account. Please try again.",
             variant: "destructive",
           });
         } else {
+          console.log('Signup successful');
           toast({
             title: "Success!",
-            description: "Account created! Please check your email to verify your account.",
+            description: "Account created successfully! You can now log in.",
           });
+          // Switch to login mode after successful signup
+          setIsLogin(true);
+          setPassword('');
         }
       }
     } catch (error) {
+      console.error('Unexpected error during auth:', error);
       toast({
         title: "Error",
-        description: "An unexpected error occurred.",
+        description: "An unexpected error occurred. Please try again.",
         variant: "destructive",
       });
     } finally {
