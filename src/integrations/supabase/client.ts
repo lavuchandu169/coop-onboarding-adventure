@@ -9,5 +9,8 @@ export const supabase = createClient(supabaseUrl, supabaseKey, {
     storage: typeof window !== 'undefined' ? localStorage : undefined,
     persistSession: true,
     autoRefreshToken: true,
+    detectSessionInUrl: true,
+    flowType: 'pkce',
+    storageKey: 'kfc-coop-auth',
   }
 });

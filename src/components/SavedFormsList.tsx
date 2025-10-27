@@ -3,6 +3,7 @@ import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Trash2, Download } from 'lucide-react';
+import { Badge } from "@/components/ui/badge";
 
 interface SavedForm {
   id: string;
@@ -36,9 +37,9 @@ const SavedFormsList = ({ savedForms, loading, onLoadForm, onDeleteForm, formTyp
       </CardHeader>
       <CardContent>
         {loading ? (
-          <div className="text-center py-4">Loading...</div>
+          <div className="text-center py-4 text-muted-foreground">Loading saved forms...</div>
         ) : filteredForms.length === 0 ? (
-          <div className="text-center py-4 text-gray-500">
+          <div className="text-center py-8 text-muted-foreground">
             No saved forms yet
           </div>
         ) : (
@@ -46,25 +47,26 @@ const SavedFormsList = ({ savedForms, loading, onLoadForm, onDeleteForm, formTyp
             {filteredForms.map((form) => (
               <div
                 key={form.id}
-                className="flex items-center justify-between p-3 border rounded-lg hover:bg-gray-50"
+                className="flex items-center justify-between p-4 border border-border rounded-lg hover:bg-accent/50 transition-all duration-200 group"
               >
-                <div>
-                  <div className="font-medium">{form.form_name}</div>
-                  <div className="text-sm text-gray-500">
+                <div className="flex-1 min-w-0">
+                  <div className="font-medium text-foreground truncate">{form.form_name}</div>
+                  <div className="text-sm text-muted-foreground flex items-center gap-2 mt-1">
                     {form.form_type && (
-                      <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs mr-2">
+                      <Badge variant="secondary" className="text-xs">
                         {form.form_type}
-                      </span>
+                      </Badge>
                     )}
-                    {new Date(form.updated_at).toLocaleDateString()}
+                    <span>{new Date(form.updated_at).toLocaleDateString()}</span>
                   </div>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex gap-2 ml-4">
                   <Button
                     size="sm"
                     variant="outline"
                     onClick={() => onLoadForm(form.id)}
                     title="Load Form"
+                    className="transition-all duration-200"
                   >
                     <Download className="h-4 w-4" />
                   </Button>
@@ -73,6 +75,7 @@ const SavedFormsList = ({ savedForms, loading, onLoadForm, onDeleteForm, formTyp
                     variant="outline"
                     onClick={() => onDeleteForm(form.id)}
                     title="Delete Form"
+                    className="transition-all duration-200 hover:bg-destructive/10 hover:text-destructive hover:border-destructive"
                   >
                     <Trash2 className="h-4 w-4" />
                   </Button>
